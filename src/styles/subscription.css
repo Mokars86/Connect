@@ -1,0 +1,287 @@
+/* Connect Pro Subscription & Paywall Modal Styles */
+
+.subscription-modal-card {
+  width: min(480px, 94vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 22px;
+  text-align: center;
+  box-sizing: border-box;
+  background: var(--bg-card, #FFFFFF);
+  border-radius: var(--radius-md, 20px);
+}
+
+.pro-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, rgba(255, 183, 3, 0.15), rgba(255, 158, 0, 0.25));
+  border: 1px solid rgba(255, 183, 3, 0.4);
+  border-radius: 20px;
+  color: #D4A373;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.pro-hero-badge span {
+  font-size: 16px;
+}
+
+.subscription-title {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.subscription-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin-bottom: 16px;
+}
+
+/* Feature List Grid */
+.pro-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  background: var(--bg-input, rgba(0, 0, 0, 0.03));
+  border-radius: var(--radius-sm, 12px);
+  padding: 12px 14px;
+  margin-bottom: 18px;
+}
+
+.pro-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.pro-feature-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #09A5DB 0%, #00C9A7 100%);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+/* Plan Option Chips Grid */
+.plan-option-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.plan-chip {
+  position: relative;
+  background: var(--bg-card);
+  border: 2px solid var(--border-input, #E0E0E0);
+  border-radius: var(--radius-sm, 12px);
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+}
+
+.plan-chip:hover {
+  border-color: #09A5DB;
+  transform: translateY(-1px);
+}
+
+.plan-chip.active {
+  background: rgba(9, 165, 219, 0.08);
+  border-color: #09A5DB;
+  box-shadow: 0 4px 16px rgba(9, 165, 219, 0.2);
+}
+
+.plan-chip-tag {
+  position: absolute;
+  top: -9px;
+  right: 14px;
+  background: linear-gradient(135deg, #FFB703, #FF8800);
+  color: #1A1A1A;
+  font-size: 9.5px;
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.plan-info-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.plan-name {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.plan-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.plan-price-box {
+  text-align: right;
+}
+
+.plan-price {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.plan-period {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+}
+
+/* Paystack CTA Button */
+.btn-paystack-sub {
+  width: 100%;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #09A5DB 0%, #00C3F8 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-sm, 12px);
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(9, 165, 219, 0.35);
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-paystack-sub:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(9, 165, 219, 0.45);
+}
+
+.btn-paystack-sub:active {
+  transform: scale(0.98);
+}
+
+/* Promo Code Box */
+.promo-code-section {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border-input, #EAEAEA);
+}
+
+.promo-toggle-btn {
+  background: none;
+  border: none;
+  color: #09A5DB;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px;
+  text-decoration: underline;
+}
+
+.promo-input-group {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.promo-input-group input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid var(--border-input, #DDD);
+  border-radius: var(--radius-sm, 8px);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-apply-promo {
+  padding: 10px 14px;
+  background: var(--bg-button, #1A1A1A);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-sm, 8px);
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Active Pro Details Badge */
+.active-pro-card {
+  background: linear-gradient(135deg, rgba(9, 165, 219, 0.1), rgba(0, 201, 167, 0.1));
+  border: 1.5px solid #09A5DB;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+.active-pro-title {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.active-pro-sub {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+/* Mobile responsive */
+@media screen and (max-height: 680px), screen and (max-width: 375px) {
+  .subscription-modal-card {
+    padding: 14px;
+  }
+  .subscription-title {
+    font-size: 20px;
+  }
+  .pro-features-list {
+    padding: 10px;
+    gap: 6px;
+  }
+  .pro-feature-item {
+    font-size: 11.5px;
+  }
+  .plan-chip {
+    padding: 10px;
+  }
+  .btn-paystack-sub {
+    padding: 12px;
+    font-size: 14px;
+  }
+}

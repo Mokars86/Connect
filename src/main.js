@@ -15,12 +15,12 @@ import './styles/pingback.css';
 import './styles/bottomnav.css';
 import './styles/walletpass.css';
 import './styles/donation.css';
+import './styles/subscription.css';
 
 import { renderBottomNav } from './components/BottomNav.js';
 import { renderWalletPassModal } from './components/WalletPassModal.js';
 import { renderDonationModal } from './components/DonationModal.js';
-
-
+import { renderSubscriptionModal } from './components/SubscriptionModal.js';
 
 import { 
   loadProfiles, 
@@ -33,7 +33,8 @@ import {
   getThemeMode, 
   setThemeMode,
   isAutoScheduleEnabled,
-  setAutoScheduleEnabled
+  setAutoScheduleEnabled,
+  isProSubscribed
 } from './utils/storage.js';
 
 import { downloadVCardFile } from './utils/vcard.js';
@@ -82,7 +83,6 @@ class ConnectApp {
     this.init();
   }
 
-
   init() {
     // Apply saved Theme Mode
     const savedTheme = getThemeMode();
@@ -97,6 +97,19 @@ class ConnectApp {
 
     // Render Animated Splash Boot Screen Overlay on top
     this.openSplashScreen(1800);
+
+    // Check URL parameters for PWA App Icon Shortcut & Widget actions
+    const urlParams = new URLSearchParams(window.location.search);
+    const action = urlParams.get('action');
+    if (action) {
+      setTimeout(() => {
+        if (action === 'scan') this.openScanModal();
+        else if (action === 'wallpaper') this.openWallpaperModal();
+        else if (action === 'wallet') this.openWalletPassModal();
+        else if (action === 'burner') this.openBurnerModal();
+        else if (action === 'utility') this.openUtilityQRModal();
+      }, 1900);
+    }
   }
 
   openSplashScreen(delayMs = 1800) {
@@ -122,49 +135,45 @@ class ConnectApp {
   }
 
   showToast(message) {
-    let toast = document.querySelector('.toast-notification');
+    let toast = document.getElementById('app-toast');
     if (!toast) {
       toast = document.createElement('div');
+      toast.id = 'app-toast';
       toast.className = 'toast-notification';
       document.body.appendChild(toast);
     }
-    toast.innerHTML = `<span>✨</span><span>${message}</span>`;
+    toast.textContent = message;
     toast.classList.add('show');
     setTimeout(() => {
       toast.classList.remove('show');
     }, 2800);
   }
 
-  navigateTo(screenName) {
-    this.currentScreen = screenName;
-    if (screenName === 'dashboard' || screenName === 'editor') {
-      this.activeTab = 'card';
-    } else if (screenName === 'connections') {
-      this.activeTab = 'contacts';
-    }
+  navigateTo(screen) {
+    this.currentScreen = screen;
     this.render();
   }
 
   render() {
     const activeProfile = getActiveProfile();
+    const isPro = isProSubscribed();
 
     if (this.currentScreen === 'onboarding') {
       renderOnboarding(this.appContainer, {
-        onGenerateQR: ({ name, phone }) => {
-          const updated = { ...activeProfile, name, phone };
-          updateProfile(updated);
+        onComplete: () => {
           setOnboarded(true);
-          this.showToast(`Welcome ${name}! Your QR code is ready.`);
           this.navigateTo('dashboard');
         }
       });
+      this.attachBottomNav();
       return;
     }
 
     if (this.currentScreen === 'dashboard') {
       renderDashboard(this.appContainer, {
         activeProfile,
-        onOpenCustomize: () => this.navigateTo('editor'),
+        isPro,
+        onOpenCustomize: () => this.openCustomize(),
         onOpenWidgets: () => this.openWidgetGuide(),
         onOpenScan: () => this.openScanModal(),
         onOpenWallpaper: () => this.openWallpaperModal(),
@@ -176,6 +185,7 @@ class ConnectApp {
         onOpenDrawer: () => this.openDrawer(),
         onOpenSettings: () => this.openDrawer(),
         onOpenProfileSelector: () => this.openProfileSelector(),
+        onOpenSubscription: () => this.openSubscriptionModal(),
         showToast: (msg) => this.showToast(msg)
       });
       this.attachModals();
@@ -244,10 +254,9 @@ class ConnectApp {
     });
   }
 
-
-
-
   attachModals() {
+    const isPro = isProSubscribed();
+
     // Attach Sidebar Drawer
     let drawerSlot = document.getElementById('drawer-slot');
     if (!drawerSlot) {
@@ -258,7 +267,8 @@ class ConnectApp {
 
     this.drawerControl = renderDrawer(drawerSlot, {
       activeProfile: getActiveProfile(),
-      onOpenCustomize: () => this.navigateTo('editor'),
+      isPro,
+      onOpenCustomize: () => this.openCustomize(),
       onOpenProfiles: () => this.openProfileSelector(),
       onOpenWidgets: () => this.openWidgetGuide(),
       onOpenScan: () => this.openScanModal(),
@@ -271,10 +281,14 @@ class ConnectApp {
       onOpenWalletPass: () => this.openWalletPassModal(),
       onOpenDonation: () => this.openDonationModal(),
       onOpenInstall: () => this.openInstallModal(),
+      onOpenSubscription: () => this.openSubscriptionModal(),
       onOpenSplash: () => this.openSplashScreen(2000),
 
-
       onToggleAutoSchedule: () => {
+        if (!isProSubscribed()) {
+          this.openSubscriptionModal('Time-Based Auto-Schedule Switcher');
+          return;
+        }
         const current = isAutoScheduleEnabled();
         setAutoScheduleEnabled(!current);
         this.showToast(`Auto-Schedule (9 AM - 5 PM Weekdays) ${!current ? 'Enabled' : 'Disabled'}`);
@@ -315,6 +329,30 @@ class ConnectApp {
       profileSlot.id = 'profile-modal-slot';
       this.appContainer.appendChild(profileSlot);
     }
+  }
+
+  openSubscriptionModal(featureName = '') {
+    let subSlot = document.getElementById('subscription-modal-slot');
+    if (!subSlot) {
+      subSlot = document.createElement('div');
+      subSlot.id = 'subscription-modal-slot';
+      this.appContainer.appendChild(subSlot);
+    }
+    renderSubscriptionModal(subSlot, {
+      featureName,
+      showToast: (msg) => this.showToast(msg),
+      onSuccess: () => {
+        this.render();
+      }
+    });
+  }
+
+  openCustomize() {
+    if (!isProSubscribed()) {
+      this.openSubscriptionModal('Customize Profile Card & Advanced QR Design');
+      return;
+    }
+    this.navigateTo('editor');
   }
 
   openWallpaperModal() {
@@ -371,6 +409,10 @@ class ConnectApp {
   }
 
   openBurnerModal() {
+    if (!isProSubscribed()) {
+      this.openSubscriptionModal('Disposable Burner QR Profiles');
+      return;
+    }
     let burnerSlot = document.getElementById('burner-modal-slot');
     if (!burnerSlot) {
       burnerSlot = document.createElement('div');
@@ -383,6 +425,10 @@ class ConnectApp {
   }
 
   openExportKitModal() {
+    if (!isProSubscribed()) {
+      this.openSubscriptionModal('Export Kit (Vector SVG & Print PDF)');
+      return;
+    }
     let kitSlot = document.getElementById('exportkit-modal-slot');
     if (!kitSlot) {
       kitSlot = document.createElement('div');
@@ -397,6 +443,10 @@ class ConnectApp {
   }
 
   openAnalyticsModal() {
+    if (!isProSubscribed()) {
+      this.openSubscriptionModal('Scan Analytics & Sharing Statistics');
+      return;
+    }
     this.activeTab = 'analytics';
     this.attachBottomNav('analytics');
     let analyticsSlot = document.getElementById('analytics-modal-slot');
@@ -409,6 +459,10 @@ class ConnectApp {
   }
 
   openWalletPassModal() {
+    if (!isProSubscribed()) {
+      this.openSubscriptionModal('Apple & Google Wallet Passes');
+      return;
+    }
     let walletSlot = document.getElementById('wallet-modal-slot');
     if (!walletSlot) {
       walletSlot = document.createElement('div');
@@ -448,9 +502,6 @@ class ConnectApp {
     });
     installControl.openModal();
   }
-
-
-
 
   openPingBackModal() {
     let pingSlot = document.getElementById('pingback-modal-slot');
@@ -493,6 +544,10 @@ class ConnectApp {
           this.render();
         },
         onCreateProfile: () => {
+          if (!isProSubscribed()) {
+            this.openSubscriptionModal('Unlimited Contact Profile Cards');
+            return;
+          }
           const newProfile = {
             id: `custom_${Date.now()}`,
             type: 'Networking',

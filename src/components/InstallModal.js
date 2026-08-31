@@ -23,8 +23,8 @@ export function renderInstallModal(container, options = {}) {
             <div style="width: 64px; height: 64px; background: rgba(0, 201, 167, 0.15); color: #00C9A7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px;">
               ✓
             </div>
-            <h4 style="font-family: var(--font-heading); color: var(--text-primary); font-size: 16px; margin-bottom: 8px;">You're using CONNECT App!</h4>
-            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">CONNECT is running in native app mode on your device.</p>
+            <h4 style="font-family: var(--font-heading); color: var(--text-primary); font-size: 16px; margin-bottom: 8px;">You're using Connect App!</h4>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">Connect is running in native app mode on your device.</p>
           </div>
           <button class="btn btn-primary btn-block close-modal-btn" style="margin-top: 16px;">Got It</button>
         </div>
@@ -33,11 +33,11 @@ export function renderInstallModal(container, options = {}) {
       modalOverlay.innerHTML = `
         <div class="modal-card">
           <div class="modal-header">
-            <h3 class="modal-title">Install CONNECT on iOS</h3>
+            <h3 class="modal-title">Install Connect on iOS</h3>
             <button class="icon-btn close-modal-btn" aria-label="Close">✕</button>
           </div>
           <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
-            Install CONNECT on your iPhone or iPad for instant offline access and full-screen experience.
+            Install Connect on your iPhone or iPad for instant offline access and full-screen experience.
           </p>
 
           <div class="widget-step-card">
@@ -84,14 +84,14 @@ export function renderInstallModal(container, options = {}) {
       modalOverlay.innerHTML = `
         <div class="modal-card">
           <div class="modal-header">
-            <h3 class="modal-title">Install CONNECT App</h3>
+            <h3 class="modal-title">Install Connect App</h3>
             <button class="icon-btn close-modal-btn" aria-label="Close">✕</button>
           </div>
           <div style="text-align: center; padding: 16px 10px;">
-            <img src="/logo.png" alt="CONNECT Logo" style="width: 72px; height: 72px; border-radius: 18px; margin-bottom: 14px; box-shadow: 0 8px 24px rgba(0, 201, 167, 0.25);" />
-            <h4 style="font-family: var(--font-heading); color: var(--text-primary); font-size: 16px; margin-bottom: 6px;">Install CONNECT App</h4>
+            <img src="/logo.png" alt="Connect Logo" style="width: 72px; height: 72px; border-radius: 18px; margin-bottom: 14px; box-shadow: 0 8px 24px rgba(0, 201, 167, 0.25);" />
+            <h4 style="font-family: var(--font-heading); color: var(--text-primary); font-size: 16px; margin-bottom: 6px;">Install Connect App</h4>
             <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px;">
-              Add CONNECT to your device home screen for instant offline QR contact sharing & zero load times.
+              Add Connect to your device home screen for instant offline QR contact sharing & zero load times.
             </p>
             <button id="trigger-pwa-install-btn" class="btn btn-primary btn-block" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
               <span>📲</span> <span>Install Application</span>

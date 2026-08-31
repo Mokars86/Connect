@@ -12,7 +12,8 @@ const STORAGE_KEYS = {
   UTILITY_QRS: 'connect_utility_qrs_v1',
   ANALYTICS: 'connect_analytics_v1',
   AUTO_SCHEDULE: 'connect_auto_schedule_v1',
-  BURNER_PROFILES: 'connect_burner_profiles_v1'
+  BURNER_PROFILES: 'connect_burner_profiles_v1',
+  PRO_SUBSCRIPTION: 'connect_pro_subscription_v1'
 };
 
 const DEFAULT_PROFILES = [
@@ -292,3 +293,86 @@ export function logAnalyticsEvent(eventType, channel = 'general') {
   analytics.lastSharedDate = new Date().toLocaleDateString();
   localStorage.setItem(STORAGE_KEYS.ANALYTICS, JSON.stringify(analytics));
 }
+
+// ==========================================
+// FEATURE: CONNECT PRO SUBSCRIPTION & PAYWALL
+// ==========================================
+
+export function getSubscriptionState() {
+  try {
+    const data = localStorage.getItem(STORAGE_KEYS.PRO_SUBSCRIPTION);
+    if (!data) return { isPro: false, planType: 'free' };
+    const sub = JSON.parse(data);
+    // Check if expired for recurring subscriptions if expiration date is set
+    if (sub.expiresAt && new Date(sub.expiresAt).getTime() < Date.now()) {
+      return { isPro: false, planType: 'expired', ref: sub.ref };
+    }
+    return sub;
+  } catch (e) {
+    return { isPro: false, planType: 'free' };
+  }
+}
+
+export function isProSubscribed() {
+  const sub = getSubscriptionState();
+  return Boolean(sub && sub.isPro);
+}
+
+export function saveSubscriptionState(details) {
+  const subData = {
+    isPro: true,
+    planType: details.planType || 'recurring_monthly', // 'recurring_monthly', 'recurring_annual', 'lifetime', 'promo'
+    planName: details.planName || 'Connect Pro',
+    ref: details.ref || 'SUB_' + Math.floor(Math.random() * 10000000),
+    activatedAt: details.activatedAt || new Date().toISOString(),
+    expiresAt: details.expiresAt || null, // null for lifetime or active sub
+    email: details.email || ''
+  };
+  localStorage.setItem(STORAGE_KEYS.PRO_SUBSCRIPTION, JSON.stringify(subData));
+  logAnalyticsEvent('pro_upgraded', subData.planType);
+  return subData;
+}
+
+export function cancelSubscription() {
+  localStorage.removeItem(STORAGE_KEYS.PRO_SUBSCRIPTION);
+}
+
+export function redeemPromoCode(inputCode) {
+  const code = (inputCode || '').trim().toUpperCase();
+  const validCodes = {
+    'CONNECTPRO': { planType: 'promo', planName: 'Connect Pro (VIP Access)' },
+    'CONNECTPRO2026': { planType: 'promo', planName: 'Connect Pro (2026 Early Adopter)' },
+    'VIP2026': { planType: 'promo', planName: 'Connect VIP Lifetime Pass' },
+    'PRO30DAYS': { planType: 'promo', planName: 'Connect Pro (30 Days Trial)', durationDays: 30 }
+  };
+
+  // 1. Static Code Match
+  if (validCodes[code]) {
+    const info = validCodes[code];
+    let expiresAt = null;
+    if (info.durationDays) {
+      expiresAt = new Date(Date.now() + info.durationDays * 24 * 60 * 60 * 1000).toISOString();
+    }
+    const sub = saveSubscriptionState({
+      planType: info.planType,
+      planName: info.planName,
+      ref: 'PROMO_' + code,
+      expiresAt: expiresAt
+    });
+    return { success: true, message: `🎉 Code redeemed! You now have ${info.planName}.`, sub };
+  }
+
+  // 2. Dynamic VIP Code Match (e.g. VIP-1234, VIP-MOKARS, PASS-8899)
+  if (code.startsWith('VIP-') || code.startsWith('PASS-')) {
+    const sub = saveSubscriptionState({
+      planType: 'promo',
+      planName: `Connect VIP Pass (${code})`,
+      ref: 'DYNAMIC_' + code,
+      expiresAt: null
+    });
+    return { success: true, message: `🎉 VIP Code ${code} activated! Full Pro features unlocked.`, sub };
+  }
+
+  return { success: false, message: 'Invalid or expired promo code. Please check and try again.' };
+}
+

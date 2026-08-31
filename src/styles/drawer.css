@@ -468,4 +468,21 @@
     padding: 14px 14px 18px 14px;
     max-height: 92vh;
   }
+
+  .widget-modal-card {
+    width: min(440px, 94vw);
+    padding: 12px 12px 14px 12px;
+  }
+
+  .widget-step-card {
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    gap: 8px;
+  }
+
+  .step-num {
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+  }
 }

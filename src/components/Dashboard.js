@@ -16,6 +16,8 @@ export function renderDashboard(container, {
   onOpenDrawer, 
   onOpenSettings, 
   onOpenProfileSelector, 
+  onOpenSubscription,
+  isPro = false,
   showToast 
 }) {
   const nameUpper = (activeProfile.name || 'JANE DOE').toUpperCase();
@@ -78,7 +80,7 @@ export function renderDashboard(container, {
   // Render Header Navbar
   const headerSlot = document.getElementById('dashboard-header-slot');
   if (headerSlot) {
-    renderHeader(headerSlot, { onOpenDrawer, onOpenSettings, activeProfile });
+    renderHeader(headerSlot, { onOpenDrawer, onOpenSettings, onOpenSubscription, isPro, activeProfile });
   }
 
   // Render SVG QR Code into target frame
@@ -87,7 +89,6 @@ export function renderDashboard(container, {
 
   // Attach Event Handlers
   document.getElementById('btn-dashboard-wallpaper')?.addEventListener('click', onOpenWallpaper);
-
 
   // Sharing pill click copies details & opens selector
   document.getElementById('pill-sharing-info')?.addEventListener('click', () => {

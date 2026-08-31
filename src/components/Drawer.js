@@ -15,13 +15,15 @@ export function renderDrawer(container, {
   onOpenWalletPass,
   onOpenDonation,
   onOpenInstall,
+  onOpenSubscription,
   onOpenSplash, 
   onToggleAutoSchedule, 
   isAutoScheduleOn, 
   onExportVCard, 
   onToggleTheme, 
   onResetData, 
-  currentTheme 
+  currentTheme,
+  isPro = false
 }) {
   const profileName = activeProfile.name || 'JANE DOE';
   const profileType = activeProfile.type || 'Personal';
@@ -55,7 +57,7 @@ export function renderDrawer(container, {
           </div>
           <div class="drawer-profile-info">
             <div class="drawer-profile-name">${profileName}</div>
-            <div class="drawer-profile-badge">${profileType.toUpperCase()} CARD</div>
+            <div class="drawer-profile-badge">${profileType.toUpperCase()} CARD ${isPro ? '• 👑 PRO' : ''}</div>
           </div>
           <div class="drawer-profile-switch-icon" title="Switch Card">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -65,10 +67,33 @@ export function renderDrawer(container, {
         </div>
 
         <ul class="drawer-menu-list">
+          <!-- CONNECT PRO PROMOTION CARD -->
+          <li class="drawer-menu-item item-highlight" id="menu-subscription" style="
+            background: ${isPro ? 'linear-gradient(135deg, rgba(9,165,219,0.12), rgba(0,201,167,0.12))' : 'linear-gradient(135deg, rgba(255,183,3,0.15), rgba(255,136,0,0.15))'};
+            border: 1.5px solid ${isPro ? '#09A5DB' : '#FFB703'};
+          ">
+            <div class="drawer-item-left">
+              <div class="drawer-icon-box" style="background: ${isPro ? '#09A5DB' : '#FFB703'}; color: #FFFFFF;">
+                <span>👑</span>
+              </div>
+              <div style="display: flex; flex-direction: column;">
+                <span class="drawer-item-label" style="font-weight: 800; font-size: 13.5px; color: var(--text-primary);">
+                  ${isPro ? 'Connect Pro Active' : 'Upgrade to Connect Pro'}
+                </span>
+                <span style="font-size: 10.5px; color: var(--text-muted);">
+                  ${isPro ? 'Access all premium features' : 'Unlock Wallet, Analytics & Wallpapers'}
+                </span>
+              </div>
+            </div>
+            <span class="drawer-pill-badge" style="background: ${isPro ? '#00C9A7' : '#FFB703'}; color: ${isPro ? '#FFF' : '#1A1A1A'}; font-weight: 900;">
+              ${isPro ? 'ACTIVE' : 'UPGRADE'}
+            </span>
+          </li>
+
           <!-- SECTION 1: CARDS & DESIGN -->
           <div class="drawer-section-label">Cards & Customization</div>
 
-          <li class="drawer-menu-item item-highlight" id="menu-customize">
+          <li class="drawer-menu-item" id="menu-customize">
             <div class="drawer-item-left">
               <div class="drawer-icon-box box-teal">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -78,7 +103,7 @@ export function renderDrawer(container, {
               </div>
               <span class="drawer-item-label">Customize Card & QR</span>
             </div>
-            <span class="drawer-pill-badge badge-teal">PRO DESIGN</span>
+            ${!isPro ? '<span class="drawer-pill-badge badge-orange">🔒 PRO</span>' : '<span class="drawer-pill-badge badge-teal">DESIGN</span>'}
           </li>
 
           <li class="drawer-menu-item" id="menu-profiles">
@@ -103,7 +128,7 @@ export function renderDrawer(container, {
               </div>
               <span class="drawer-item-label">Disposable Burner QR</span>
             </div>
-            <span class="drawer-pill-badge badge-red">TEMP</span>
+            ${!isPro ? '<span class="drawer-pill-badge badge-orange">🔒 PRO</span>' : '<span class="drawer-pill-badge badge-red">TEMP</span>'}
           </li>
 
           <li class="drawer-menu-item" id="menu-wallpaper">
@@ -147,7 +172,7 @@ export function renderDrawer(container, {
               </div>
               <span class="drawer-item-label">Apple & Google Wallet</span>
             </div>
-            <span class="drawer-pill-badge badge-orange">PASS</span>
+            ${!isPro ? '<span class="drawer-pill-badge badge-orange">🔒 PRO</span>' : '<span class="drawer-pill-badge badge-orange">PASS</span>'}
           </li>
 
           <li class="drawer-menu-item" id="menu-exportkit">
@@ -158,9 +183,9 @@ export function renderDrawer(container, {
                   <polyline points="22,6 12,13 2,6"/>
                 </svg>
               </div>
-              <span class="drawer-item-label">Email & Zoom Kit</span>
+              <span class="drawer-item-label">Export Kit (SVG & Print PDF)</span>
             </div>
-            <svg class="drawer-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            ${!isPro ? '<span class="drawer-pill-badge badge-orange">🔒 PRO</span>' : '<svg class="drawer-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>'}
           </li>
 
           <li class="drawer-menu-item" id="menu-export">
@@ -237,7 +262,7 @@ export function renderDrawer(container, {
               </div>
               <span class="drawer-item-label">Sharing Analytics</span>
             </div>
-            <svg class="drawer-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            ${!isPro ? '<span class="drawer-pill-badge badge-orange">🔒 PRO</span>' : '<svg class="drawer-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>'}
           </li>
 
           <li class="drawer-menu-item" id="menu-widgets">
@@ -265,7 +290,7 @@ export function renderDrawer(container, {
               </div>
               <span class="drawer-item-label">Time-Schedule Switch</span>
             </div>
-            <span class="drawer-pill-badge ${isAutoScheduleOn ? 'badge-teal' : 'badge-gray'}">${isAutoScheduleOn ? 'ON' : 'OFF'}</span>
+            ${!isPro ? '<span class="drawer-pill-badge badge-orange">🔒 PRO</span>' : `<span class="drawer-pill-badge ${isAutoScheduleOn ? 'badge-teal' : 'badge-gray'}">${isAutoScheduleOn ? 'ON' : 'OFF'}</span>`}
           </li>
 
           <!-- SECTION 4: PREFERENCES & SUPPORT -->
@@ -362,6 +387,11 @@ export function renderDrawer(container, {
 
   backdrop?.addEventListener('click', closeDrawer);
   document.getElementById('btn-close-drawer')?.addEventListener('click', closeDrawer);
+
+  document.getElementById('menu-subscription')?.addEventListener('click', () => {
+    closeDrawer();
+    if (onOpenSubscription) onOpenSubscription();
+  });
 
   document.getElementById('menu-active-profile-card')?.addEventListener('click', () => {
     closeDrawer();

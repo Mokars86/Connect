@@ -1,6 +1,6 @@
 {
-  "name": "CONNECT - Contact Sharing QR App",
-  "short_name": "CONNECT",
+  "name": "Connect - Contact Sharing QR App",
+  "short_name": "Connect",
   "description": "Instant high-contrast QR code contact sharing app with offline vCard support and profile customization.",
   "start_url": "/",
   "id": "/",
@@ -38,5 +38,35 @@
   "categories": [
     "productivity",
     "utilities"
+  ],
+  "shortcuts": [
+    {
+      "name": "Scan Contact QR",
+      "short_name": "Scan QR",
+      "description": "Open camera scanner to save contact",
+      "url": "/?action=scan",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Lock Screen Wallpaper",
+      "short_name": "Wallpaper",
+      "description": "Show lock screen wallpaper QR",
+      "url": "/?action=wallpaper",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "My Contact QR",
+      "short_name": "Share QR",
+      "description": "Display active contact QR card",
+      "url": "/?action=share",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Apple & Google Wallet",
+      "short_name": "Wallet Pass",
+      "description": "View digital wallet pass",
+      "url": "/?action=wallet",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
   ]
 }
