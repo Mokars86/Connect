@@ -1,0 +1,237 @@
+/* Screen 3: Customize Contact Card (vCard Editor) Styles */
+.editor-screen {
+  padding: 14px 18px;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Header Navbar */
+.editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.editor-title {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.btn-save-pill {
+  background: var(--primary-gradient);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 8px 18px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 13.5px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-save-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-save-pill:active {
+  transform: scale(0.96);
+}
+
+/* Live Mini QR Preview Container */
+.editor-mini-preview-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 6px 0 16px 0;
+  gap: 6px;
+}
+
+.mini-qr-frame {
+  width: 150px;
+  height: 150px;
+  background: #FFFFFF;
+  border: 3px solid var(--border-strong);
+  border-radius: 24px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0, 180, 216, 0.2);
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mini-qr-frame:hover {
+  transform: scale(1.04);
+  box-shadow: 0 14px 36px rgba(0, 201, 167, 0.3);
+}
+
+.mini-qr-frame svg,
+.mini-qr-frame canvas {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+
+.mini-qr-caption {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Form Fields Scroll Area */
+.editor-fields-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.section-label {
+  font-family: var(--font-heading);
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--primary-teal);
+  text-transform: uppercase;
+  margin: 14px 0 6px 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Avatar Upload Alignment Box */
+.avatar-upload-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.btn-upload-avatar {
+  flex: 1;
+  padding: 12px 16px;
+  background: var(--bg-card);
+  border: 1.5px dashed var(--border-input);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-upload-avatar:hover {
+  border-color: var(--primary-teal);
+  background: rgba(0, 201, 167, 0.05);
+}
+
+/* Color Swatches Grid Alignment */
+.color-swatch-section {
+  margin-top: 14px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--bg-card);
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border-input);
+}
+
+.color-swatch-header {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.color-swatch-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.swatch-item {
+  flex: 1;
+  height: 38px;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 2.5px solid transparent;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+}
+
+.swatch-item:hover {
+  transform: scale(1.08);
+}
+
+.swatch-item.active {
+  border-color: #FFFFFF;
+  box-shadow: 0 0 0 3px var(--primary-teal), var(--shadow-md);
+  transform: scale(1.08);
+}
+
+.swatch-picker-input {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: none;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* iPhone SE & Small Mobile Screen Responsive Optimization */
+@media screen and (max-height: 680px), screen and (max-width: 375px) {
+  .editor-screen {
+    padding: 10px 14px 20px 14px;
+  }
+
+  .editor-mini-preview-container {
+    margin-bottom: 10px;
+  }
+
+  .mini-qr-frame {
+    width: 125px;
+    height: 125px;
+    border-radius: 16px;
+    padding: 8px;
+  }
+
+  .swatch-item, .swatch-picker-input {
+    height: 34px;
+  }
+}

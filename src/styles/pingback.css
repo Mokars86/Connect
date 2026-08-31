@@ -1,0 +1,18 @@
+/* Feature 2: Two-Way Contact Exchange Ping Back Styles */
+
+.pingback-card {
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.pingback-hero-badge {
+  background: var(--primary-gradient);
+  color: #FFFFFF;
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+}

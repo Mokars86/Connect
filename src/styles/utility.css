@@ -1,0 +1,107 @@
+/* Feature 3: Multi-Utility QR Generator Styles */
+
+.utility-modal-card {
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 20px 18px;
+}
+
+.utility-type-tabs {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+  margin-bottom: 14px;
+  background: var(--bg-input);
+  padding: 4px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-input);
+}
+
+.utility-tab-btn {
+  flex: 1;
+  padding: 9px 10px;
+  border-radius: var(--radius-pill);
+  border: none;
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.utility-tab-btn.active {
+  background: var(--primary-gradient);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Utility Live QR Preview Frame */
+.utility-preview-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 8px 0 14px 0;
+}
+
+.utility-qr-frame {
+  width: min(160px, 42vw);
+  height: min(160px, 42vw);
+  aspect-ratio: 1 / 1;
+  background: #FFFFFF;
+  border: 2.5px solid var(--primary-cyan);
+  border-radius: 18px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+.utility-qr-frame svg {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+
+.utility-saved-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+  border-top: 1px solid var(--border-light);
+  padding-top: 12px;
+}
+
+.utility-saved-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border-input);
+  border-radius: var(--radius-sm);
+}
+
+/* iPhone SE Responsiveness */
+@media screen and (max-height: 680px), screen and (max-width: 375px) {
+  .utility-modal-card {
+    padding: 14px 14px 18px 14px;
+    max-height: 92vh;
+  }
+
+  .utility-tab-btn {
+    padding: 7px 8px;
+    font-size: 11px;
+  }
+
+  .utility-qr-frame {
+    width: 125px;
+    height: 125px;
+    border-radius: 14px;
+    padding: 6px;
+  }
+}

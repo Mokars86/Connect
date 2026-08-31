@@ -1,0 +1,79 @@
+/* Feature 3C: Temporary / Burner Profile Mode Styles */
+
+.burner-modal-card {
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 20px 18px;
+}
+
+.burner-badge-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(230, 57, 70, 0.15);
+  color: #E63946;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.burner-preview-frame {
+  width: min(170px, 45vw);
+  height: min(170px, 45vw);
+  aspect-ratio: 1 / 1;
+  background: #FFFFFF;
+  border: 3px solid #E63946;
+  border-radius: 20px;
+  padding: 8px;
+  margin: 10px auto 14px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(230, 57, 70, 0.2);
+  transition: all 0.2s ease;
+}
+
+.burner-preview-frame svg {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+
+.burner-item-card {
+  background: var(--bg-input);
+  border: 1.5px solid #E63946;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* iPhone SE & Small Viewport Responsiveness (Height <= 680px or Width <= 375px) */
+@media screen and (max-height: 680px), screen and (max-width: 375px) {
+  .burner-modal-card {
+    padding: 14px 14px 18px 14px;
+    max-height: 92vh;
+  }
+
+  .burner-badge-indicator {
+    font-size: 10px;
+    padding: 2px 8px;
+  }
+
+  .burner-preview-frame {
+    width: 130px;
+    height: 130px;
+    border-radius: 16px;
+    margin: 6px auto 10px auto;
+    padding: 6px;
+  }
+
+  .burner-item-card {
+    padding: 10px;
+  }
+}

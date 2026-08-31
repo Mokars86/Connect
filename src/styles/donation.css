@@ -1,0 +1,187 @@
+/* Support / Buy Us a Coffee Donation Modal Styles */
+
+.donation-modal-card {
+  width: min(440px, 92vw);
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 20px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.donation-hero-icon {
+  font-size: 38px;
+  margin-bottom: 4px;
+  animation: coffeeFloat 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes coffeeFloat {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-6px) rotate(3deg); }
+}
+
+.donation-title {
+  font-family: var(--font-heading);
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.donation-subtitle {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-bottom: 14px;
+}
+
+/* Preset Amount Chips */
+.donation-preset-grid {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 14px;
+  width: 100%;
+}
+
+.donation-chip {
+  flex: 1;
+  background: var(--bg-card);
+  border: 2px solid var(--border-input);
+  border-radius: var(--radius-sm);
+  padding: 10px 6px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+.donation-chip:hover {
+  border-color: #09A5DB;
+  transform: translateY(-2px);
+}
+
+.donation-chip.active {
+  background: rgba(9, 165, 219, 0.1);
+  border-color: #09A5DB;
+  box-shadow: 0 4px 14px rgba(9, 165, 219, 0.25);
+  transform: scale(1.03);
+}
+
+.donation-chip-qty {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.donation-chip-amount {
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* Custom Amount Input */
+.custom-amount-wrapper {
+  margin-bottom: 14px;
+}
+
+/* Paystack Payment Button */
+.btn-paystack {
+  width: 100%;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #09A5DB 0%, #00C3F8 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(9, 165, 219, 0.35);
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-paystack:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(9, 165, 219, 0.45);
+}
+
+.btn-paystack:active {
+  transform: scale(0.98);
+}
+
+.paystack-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
+.paystack-badge svg {
+  color: #09A5DB;
+}
+
+/* iPhone SE & Small Viewport Responsive Optimization (Height <= 680px or Width <= 375px) */
+@media screen and (max-height: 680px), screen and (max-width: 375px) {
+  .donation-modal-card {
+    padding: 12px 14px;
+    max-height: 92vh;
+  }
+
+  .donation-hero-icon {
+    font-size: 30px;
+    margin-bottom: 2px;
+  }
+
+  .donation-title {
+    font-size: 18px;
+    margin-bottom: 2px;
+  }
+
+  .donation-subtitle {
+    font-size: 11.5px;
+    line-height: 1.35;
+    margin-bottom: 10px;
+  }
+
+  .donation-preset-grid {
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .donation-chip {
+    padding: 8px 4px;
+  }
+
+  .donation-chip-qty {
+    font-size: 12.5px;
+  }
+
+  .donation-chip-amount {
+    font-size: 12px;
+  }
+
+  .btn-paystack {
+    padding: 12px 14px;
+    font-size: 13.5px;
+  }
+
+  .paystack-badge {
+    font-size: 10px;
+    margin-top: 8px;
+  }
+}

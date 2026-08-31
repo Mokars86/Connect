@@ -1,0 +1,202 @@
+/* Apple & Google Wallet Pass Modal Styles */
+
+.wallet-modal-card {
+  width: min(440px, 92vw);
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+/* Wallet Pass Visual Card Container (Styled like native Apple Wallet .pkpass) */
+.wallet-pass-preview {
+  width: 100%;
+  border-radius: 20px;
+  background: #1C1C1E;
+  color: #FFFFFF;
+  padding: 18px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 12px 0 18px 0;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.wallet-pass-preview:hover {
+  transform: translateY(-2px);
+}
+
+/* Top Accent Strip */
+.wallet-pass-accent-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: var(--primary-gradient);
+}
+
+/* Header */
+.wallet-pass-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding-bottom: 10px;
+}
+
+.wallet-pass-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: #FFFFFF;
+}
+
+.wallet-pass-badge {
+  font-size: 10px;
+  font-weight: 800;
+  background: var(--primary-teal);
+  color: #0F2537;
+  padding: 3px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Primary Details Body */
+.wallet-pass-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wallet-pass-name {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #FFFFFF;
+}
+
+.wallet-pass-sub {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.wallet-pass-contact-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 4px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* QR Code Section inside Pass */
+.wallet-pass-qr-container {
+  width: 100%;
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.wallet-pass-qr-frame {
+  width: 170px;
+  height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wallet-pass-qr-frame svg,
+.wallet-pass-qr-frame canvas {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+
+.wallet-pass-caption {
+  font-size: 10px;
+  font-weight: 700;
+  color: #0F2537;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Pass Footer Info */
+.wallet-pass-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
+  padding-top: 8px;
+}
+
+/* Buttons Grid */
+.wallet-buttons-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.btn-apple-wallet {
+  background: #000000;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease;
+}
+
+.btn-apple-wallet:hover {
+  background: #1a1a1a;
+  transform: translateY(-1px);
+}
+
+.btn-google-wallet {
+  background: #FFFFFF;
+  color: #1F1F1F;
+  border: 1.5px solid #E0E0E0;
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.btn-google-wallet:hover {
+  background: #F8F9FA;
+  transform: translateY(-1px);
+}

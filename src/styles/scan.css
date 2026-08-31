@@ -1,0 +1,131 @@
+/* Scanned Contact & Messaging Pop Action Bar Styles */
+
+.scanned-contact-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding-bottom: 10px;
+}
+
+.scanned-avatar-badge {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 800;
+  box-shadow: var(--shadow-md), var(--glow-accent);
+}
+
+.scanned-contact-name {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.scanned-contact-phone {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary-teal);
+  letter-spacing: 0.5px;
+}
+
+/* Popping Messaging Icon Action Grid */
+.pop-messaging-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 10px 0;
+}
+
+.pop-messaging-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 14px;
+  color: #FFFFFF;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-decoration: none;
+  animation: popIconBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+.pop-messaging-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: var(--shadow-md);
+}
+
+.pop-messaging-btn:active {
+  transform: scale(0.96);
+}
+
+/* WhatsApp Button */
+.btn-whatsapp {
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.3);
+  animation-delay: 0.1s;
+}
+
+/* Telegram Button */
+.btn-telegram {
+  background: linear-gradient(135deg, #229ED9 0%, #0088CC 100%);
+  box-shadow: 0 6px 18px rgba(34, 158, 217, 0.3);
+  animation-delay: 0.2s;
+}
+
+/* Call & SMS Buttons */
+.btn-call {
+  background: linear-gradient(135deg, #00C9A7 0%, #0096C7 100%);
+  animation-delay: 0.3s;
+}
+
+.btn-sms {
+  background: linear-gradient(135deg, #7209B7 0%, #510087 100%);
+  animation-delay: 0.4s;
+}
+
+@keyframes popIconBounce {
+  0% { transform: scale(0.6); opacity: 0; }
+  70% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Scanner Camera Frame */
+.scanner-viewport-frame {
+  width: 100%;
+  max-width: 320px;
+  height: 260px;
+  margin: 0 auto;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 2px solid var(--primary-teal);
+  position: relative;
+  background: #000;
+}
+
+#reader {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#reader video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}

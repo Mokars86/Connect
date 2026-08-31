@@ -1,0 +1,233 @@
+@import './variables.css';
+
+/* Resets & Global Setup */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  font-family: var(--font-body);
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-gradient-start);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  user-select: none;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Main Mobile Application Container */
+.mobile-app-container {
+  width: 100%;
+  max-width: 480px;
+  height: 100vh;
+  margin: 0 auto;
+  position: relative;
+  background: linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0, 100, 120, 0.08);
+  overflow: hidden;
+}
+
+.screen-view {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow-y: auto;
+  opacity: 1;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.screen-view.hidden {
+  display: none !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Common Typography & Headlines */
+h1, h2, h3, .brand-font {
+  font-family: var(--font-heading);
+}
+
+/* Common Button Styles */
+.btn-primary {
+  width: 100%;
+  padding: 16px 20px;
+  background: var(--primary-gradient);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary-outlined {
+  width: 100%;
+  padding: 14px 20px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 2px solid var(--border-input);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-secondary-outlined:hover {
+  border-color: var(--primary-teal);
+  background: rgba(0, 201, 167, 0.05);
+}
+
+.btn-widgets {
+  background: var(--button-widgets-bg);
+  box-shadow: 0 6px 18px rgba(0, 136, 168, 0.25);
+}
+
+.btn-icon {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.btn-icon:hover {
+  background: rgba(0, 180, 216, 0.1);
+}
+
+/* Floating Label Form Inputs */
+.floating-label-group {
+  position: relative;
+  margin-bottom: 18px;
+  width: 100%;
+}
+
+.floating-label-group input,
+.floating-label-group select {
+  width: 100%;
+  padding: 18px 16px 8px 16px;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border-input);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  outline: none;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.floating-label-group input:focus,
+.floating-label-group select:focus {
+  border-color: var(--border-input-focus);
+  box-shadow: 0 0 0 3px rgba(0, 180, 216, 0.15);
+}
+
+.floating-label-group label {
+  position: absolute;
+  left: 16px;
+  top: 14px;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 500;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.floating-label-group input:focus ~ label,
+.floating-label-group input:not(:placeholder-shown) ~ label,
+.floating-label-group select:focus ~ label,
+.floating-label-group select ~ label {
+  top: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary-teal);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+
+/* Phone Input Combo Field */
+.phone-input-combo {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.phone-input-combo .country-select {
+  width: 90px;
+  padding: 16px 8px 6px 12px;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border-input);
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text-primary);
+  outline: none;
+  cursor: pointer;
+}
+
+/* Toast Notifications */
+.toast-notification {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #0F2537;
+  color: #FFFFFF;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  z-index: 10000;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toast-notification.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}

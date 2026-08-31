@@ -1,0 +1,244 @@
+/* Screen 2: Home Dashboard Styles */
+.dashboard-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Header Navbar */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-bottom: 6px;
+  flex-shrink: 0;
+}
+
+.app-logo-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.app-logo-badge svg {
+  width: 36px;
+  height: 36px;
+}
+
+.brand-title {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: 0.8px;
+  color: var(--text-primary);
+}
+
+/* Info Pill Top Header Card */
+.sharing-info-pill {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-input);
+  border-radius: 20px;
+  padding: 12px 16px;
+  text-align: center;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  backdrop-filter: blur(8px);
+}
+
+.sharing-info-pill:hover {
+  border-color: var(--primary-teal);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(0, 201, 167, 0.18);
+}
+
+.sharing-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sharing-details {
+  font-family: var(--font-heading);
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.sharing-badge {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  background: rgba(0, 201, 167, 0.15);
+  color: var(--primary-teal);
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  margin-left: 4px;
+}
+
+/* Hero QR Code Container (Responsive Scaling for iPhone SE & All Devices) */
+.hero-qr-container {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 8px 0;
+  min-height: 180px;
+  position: relative;
+}
+
+.hero-qr-container::before {
+  content: '';
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 201, 167, 0.18) 0%, rgba(0, 180, 216, 0.05) 55%, transparent 75%);
+  pointer-events: none;
+  filter: blur(20px);
+  z-index: 0;
+}
+
+.qr-card-frame {
+  width: clamp(190px, 58vw, 260px);
+  height: clamp(190px, 58vw, 260px);
+  max-height: 34vh;
+  max-width: 34vh;
+  aspect-ratio: 1 / 1;
+  background: #FFFFFF;
+  border: 3px solid transparent;
+  background-image: linear-gradient(#FFFFFF, #FFFFFF), var(--primary-gradient);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  border-radius: 30px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 16px 42px rgba(0, 180, 216, 0.22), 0 2px 10px rgba(0, 0, 0, 0.04);
+  position: relative;
+  z-index: 1;
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.35s ease;
+}
+
+.qr-card-frame:hover {
+  transform: scale(1.03);
+  box-shadow: 0 22px 50px rgba(0, 201, 167, 0.32), 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.qr-card-frame svg,
+.qr-card-frame canvas {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+
+/* Corner Finders Styling */
+.qr-corner-accent {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: var(--primary-teal);
+  border-style: solid;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 6px rgba(0, 201, 167, 0.4));
+}
+
+.corner-tl { top: -2px; left: -2px; border-width: 4px 0 0 4px; border-top-left-radius: 22px; }
+.corner-tr { top: -2px; right: -2px; border-width: 4px 4px 0 0; border-top-right-radius: 22px; }
+.corner-bl { bottom: -2px; left: -2px; border-width: 0 0 4px 4px; border-bottom-left-radius: 22px; }
+.corner-br { bottom: -2px; right: -2px; border-width: 0 4px 4px 0; border-bottom-right-radius: 22px; }
+
+/* Dashboard Action Buttons Stack */
+.dashboard-actions-stack {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.dashboard-actions-stack button {
+  border-radius: 18px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  box-shadow: 0 8px 24px rgba(0, 119, 182, 0.28);
+  transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.dashboard-actions-stack button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 119, 182, 0.4);
+}
+
+.customize-btn-logo {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* iPhone SE & Small Mobile Screen Responsive Optimization (Height <= 680px or Width <= 375px) */
+@media screen and (max-height: 680px), screen and (max-width: 375px) {
+  .dashboard-screen {
+    padding: 10px 14px;
+    padding-bottom: 90px !important;
+  }
+
+  .app-header {
+    padding-bottom: 4px;
+  }
+
+  .sharing-info-pill {
+    padding: 8px 10px;
+  }
+
+  .sharing-details {
+    font-size: 13px;
+  }
+
+  .hero-qr-container {
+    margin: 4px 0;
+    min-height: 160px;
+  }
+
+  .qr-card-frame {
+    width: clamp(170px, 52vw, 210px);
+    height: clamp(170px, 52vw, 210px);
+    max-height: 30vh;
+    padding: 8px;
+    border-radius: 20px;
+  }
+
+  .dashboard-actions-stack {
+    gap: 8px;
+  }
+
+  .btn-primary, .btn-secondary-outlined {
+    padding: 11px 14px;
+    font-size: 13.5px;
+  }
+}

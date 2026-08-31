@@ -1,0 +1,77 @@
+:root {
+  /* Day Mode Color Palette (Matching User's Reference Wireframe) */
+  --bg-gradient-start: #EBF7F5;
+  --bg-gradient-end: #F4FBF9;
+  --bg-app: #EAF6F4;
+  --bg-card: #FFFFFF;
+  --bg-input: #FFFFFF;
+
+  /* Primary Branding Colors & Gradients */
+  --primary-teal: #00C9A7;
+  --primary-cyan: #00B4D8;
+  --primary-blue: #0077B6;
+  --primary-deep: #005691;
+  --primary-gradient: linear-gradient(135deg, #00C9A7 0%, #00B4D8 50%, #0077B6 100%);
+  --primary-gradient-hover: linear-gradient(135deg, #00B496 0%, #00A1C2 50%, #00669E 100%);
+  --button-widgets-bg: linear-gradient(135deg, #0088A8 0%, #007399 100%);
+  
+  /* Text & Typography */
+  --text-primary: #0F2537;
+  --text-secondary: #4A607A;
+  --text-muted: #8AA0B8;
+  --text-light: #FFFFFF;
+
+  /* Border & Dividers */
+  --border-light: rgba(0, 180, 216, 0.2);
+  --border-strong: #00C9A7;
+  --border-input: #CFE3E0;
+  --border-input-focus: #00B4D8;
+
+  /* Accent Swatches */
+  --swatch-teal: #00C9A7;
+  --swatch-red: #E63946;
+  --swatch-blue: #0077B6;
+  --swatch-green: #2A9D8F;
+  --swatch-slate: #1D3557;
+  --swatch-purple: #7209B7;
+
+  /* UI Shadows & Glows */
+  --shadow-sm: 0 2px 8px rgba(15, 37, 55, 0.04);
+  --shadow-md: 0 8px 24px rgba(0, 163, 181, 0.08);
+  --shadow-lg: 0 12px 32px rgba(0, 119, 182, 0.12);
+  --shadow-qr: 0 10px 30px rgba(0, 180, 216, 0.15);
+  --glow-accent: 0 0 20px rgba(0, 201, 167, 0.3);
+
+  /* Layout Dimensions */
+  --radius-xs: 6px;
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-pill: 9999px;
+
+  /* Typography Families */
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Night Mode Overrides */
+body.night-mode {
+  --bg-gradient-start: #0B192C;
+  --bg-gradient-end: #07101E;
+  --bg-app: #0B192C;
+  --bg-card: #14273E;
+  --bg-input: #102035;
+
+  --text-primary: #F0F6FC;
+  --text-secondary: #90A4AE;
+  --text-muted: #607D8B;
+
+  --border-light: rgba(0, 201, 167, 0.15);
+  --border-input: #1E3A5F;
+  --border-input-focus: #00C9A7;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
+  --shadow-qr: 0 10px 30px rgba(0, 201, 167, 0.2);
+}
