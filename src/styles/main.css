@@ -194,16 +194,19 @@ h1, h2, h3, .brand-font {
 }
 
 .phone-input-combo .country-select {
-  width: 90px;
-  padding: 16px 8px 6px 12px;
+  width: 120px;
+  max-width: 135px;
+  padding: 16px 6px 6px 10px;
   background: var(--bg-input);
   border: 1.5px solid var(--border-input);
   border-radius: var(--radius-sm);
   font-weight: 700;
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text-primary);
   outline: none;
   cursor: pointer;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Toast Notifications */

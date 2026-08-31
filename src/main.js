@@ -159,11 +159,31 @@ class ConnectApp {
     const isPro = isProSubscribed();
 
     if (this.currentScreen === 'onboarding') {
-      renderOnboarding(this.appContainer, {
-        onComplete: () => {
-          setOnboarded(true);
-          this.navigateTo('dashboard');
+      const handleOnboardSubmit = (data) => {
+        if (data && data.phone) {
+          const active = getActiveProfile();
+          updateProfile({
+            ...active,
+            name: data.name || active.name || 'My Contact Card',
+            phone: data.phone
+          });
+          // Also update business profile default name if it was preset
+          const profiles = loadProfiles();
+          const bus = profiles.find(p => p.id === 'business');
+          if (bus && (bus.name === 'Jane Doe' || !bus.name)) {
+            updateProfile({
+              ...bus,
+              name: data.name || 'My Contact Card'
+            });
+          }
         }
+        setOnboarded(true);
+        this.navigateTo('dashboard');
+      };
+
+      renderOnboarding(this.appContainer, {
+        onComplete: handleOnboardSubmit,
+        onGenerateQR: handleOnboardSubmit
       });
       this.attachBottomNav();
       return;

@@ -1,6 +1,9 @@
 import { getLogoSVG } from './Logo.js';
+import { getCountryOptionsHTML } from '../utils/countryCodes.js';
 
-export function renderOnboarding(container, { onGenerateQR }) {
+export function renderOnboarding(container, options = {}) {
+  const callback = options.onGenerateQR || options.onComplete;
+
   container.innerHTML = `
     <div class="screen-view onboarding-screen">
       <div class="onboarding-header">
@@ -20,29 +23,24 @@ export function renderOnboarding(container, { onGenerateQR }) {
         <div class="offline-badge-text">100% OFFLINE & PRIVATE</div>
       </div>
 
-      <form id="onboarding-form" class="onboarding-form">
+      <form id="onboarding-form" class="onboarding-form" novalidate>
         <div class="floating-label-group">
-          <input type="text" id="onboard-name" placeholder=" " required autocomplete="name" />
-          <label for="onboard-name">FULL NAME</label>
+          <input type="text" id="onboard-name" placeholder=" " autocomplete="name" />
+          <label for="onboard-name">FULL NAME (OPTIONAL)</label>
         </div>
 
         <div class="phone-input-combo">
           <select id="onboard-country" class="country-select" title="Country Code">
-            <option value="+1">+1 🇺🇸</option>
-            <option value="+44">+44 🇬🇧</option>
-            <option value="+233">+233 🇬🇭</option>
-            <option value="+91">+91 🇮🇳</option>
-            <option value="+49">+49 🇩🇪</option>
-            <option value="+33">+33 🇫🇷</option>
-            <option value="+81">+81 🇯🇵</option>
-            <option value="+61">+61 🇦🇺</option>
+            ${getCountryOptionsHTML('+233')}
           </select>
 
           <div class="floating-label-group" style="flex: 1; margin-bottom: 0;">
-            <input type="tel" id="onboard-phone" placeholder=" " required autocomplete="tel" />
+            <input type="tel" id="onboard-phone" placeholder=" " autocomplete="tel" required />
             <label for="onboard-phone">PHONE NUMBER</label>
           </div>
         </div>
+
+        <div id="onboard-error" class="onboard-error-msg" style="display: none; color: #E63946; font-size: 13px; font-weight: 600; text-align: center; margin-top: 4px;"></div>
 
         <div class="onboarding-footer" style="margin-top: 18px;">
           <button type="submit" class="btn-primary" id="btn-generate-qr">
@@ -54,15 +52,29 @@ export function renderOnboarding(container, { onGenerateQR }) {
   `;
 
   const form = document.getElementById('onboarding-form');
+  const errorEl = document.getElementById('onboard-error');
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('onboard-name').value.trim();
+    if (errorEl) errorEl.style.display = 'none';
+
+    const nameInput = document.getElementById('onboard-name').value.trim();
     const country = document.getElementById('onboard-country').value;
     const phoneInput = document.getElementById('onboard-phone').value.trim();
+
+    if (!phoneInput) {
+      if (errorEl) {
+        errorEl.textContent = '⚠️ Please enter your phone number to generate your QR code.';
+        errorEl.style.display = 'block';
+      }
+      return;
+    }
+
+    const finalName = nameInput || 'My Contact Card';
     const fullPhone = phoneInput.startsWith('+') ? phoneInput : `${country} ${phoneInput}`;
 
-    if (name && phoneInput) {
-      onGenerateQR({ name, phone: fullPhone });
+    if (typeof callback === 'function') {
+      callback({ name: finalName, phone: fullPhone });
     }
   });
 }
