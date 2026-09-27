@@ -220,6 +220,12 @@ class ConnectApp {
     }
 
     if (this.currentScreen === 'editor') {
+      if (!isPro) {
+        this.openSubscriptionModal('Customize Profile Card & Advanced QR Design');
+        this.navigateTo('dashboard');
+        return;
+      }
+
       renderEditor(this.appContainer, {
         activeProfile,
         onSave: (updatedProfile) => {
@@ -377,6 +383,10 @@ class ConnectApp {
   }
 
   openCustomize() {
+    if (!isProSubscribed()) {
+      this.openSubscriptionModal('Customize Profile Card & Advanced QR Design');
+      return;
+    }
     this.navigateTo('editor');
   }
 
