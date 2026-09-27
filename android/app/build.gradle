@@ -16,11 +16,19 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~:!*.apk:!*.aab'
         }
     }
+    signingConfigs {
+        release {
+            storeFile file('connect-release-key.jks')
+            storePassword 'connectApp2026!'
+            keyAlias 'connect-key'
+            keyPassword 'connectApp2026!'
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
     }
 }
