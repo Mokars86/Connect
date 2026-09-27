@@ -99,15 +99,15 @@
   margin-left: 4px;
 }
 
-/* Hero QR Code Container (Responsive Scaling for iPhone SE & All Devices) */
+/* Hero QR Code Container (Responsive Scaling for All Devices) */
 .hero-qr-container {
   width: 100%;
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 8px 0;
-  min-height: 180px;
+  margin: 10px 0;
+  min-height: 190px;
   position: relative;
 }
 
@@ -117,37 +117,39 @@
   width: 220px;
   height: 220px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 201, 167, 0.18) 0%, rgba(0, 180, 216, 0.05) 55%, transparent 75%);
+  background: radial-gradient(circle, rgba(0, 201, 167, 0.15) 0%, rgba(0, 119, 182, 0.06) 50%, transparent 70%);
   pointer-events: none;
-  filter: blur(20px);
+  filter: blur(24px);
   z-index: 0;
 }
 
 .qr-card-frame {
-  width: clamp(190px, 58vw, 260px);
-  height: clamp(190px, 58vw, 260px);
-  max-height: 34vh;
-  max-width: 34vh;
+  width: clamp(200px, 60vw, 265px);
+  height: clamp(200px, 60vw, 265px);
+  max-height: 35vh;
+  max-width: 35vh;
   aspect-ratio: 1 / 1;
   background: #FFFFFF;
-  border: 3px solid transparent;
-  background-image: linear-gradient(#FFFFFF, #FFFFFF), var(--primary-gradient);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
-  border-radius: 30px;
+  border-radius: 28px;
   padding: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 16px 42px rgba(0, 180, 216, 0.22), 0 2px 10px rgba(0, 0, 0, 0.04);
+  box-shadow: 
+    0 16px 40px -8px rgba(0, 0, 0, 0.12),
+    0 2px 10px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(0, 0, 0, 0.06);
   position: relative;
   z-index: 1;
-  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.35s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .qr-card-frame:hover {
-  transform: scale(1.03);
-  box-shadow: 0 22px 50px rgba(0, 201, 167, 0.32), 0 4px 16px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 22px 48px -6px rgba(0, 0, 0, 0.16),
+    0 4px 14px rgba(0, 0, 0, 0.06),
+    0 0 0 1.5px var(--primary-teal);
 }
 
 .qr-card-frame svg,
@@ -155,23 +157,24 @@
   width: 100% !important;
   height: 100% !important;
   object-fit: contain;
+  display: block;
 }
 
-/* Corner Finders Styling */
+/* Minimalist Clean Corner Accents */
 .qr-corner-accent {
   position: absolute;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   border-color: var(--primary-teal);
   border-style: solid;
   pointer-events: none;
-  filter: drop-shadow(0 2px 6px rgba(0, 201, 167, 0.4));
+  opacity: 0.85;
 }
 
-.corner-tl { top: -2px; left: -2px; border-width: 4px 0 0 4px; border-top-left-radius: 22px; }
-.corner-tr { top: -2px; right: -2px; border-width: 4px 4px 0 0; border-top-right-radius: 22px; }
-.corner-bl { bottom: -2px; left: -2px; border-width: 0 0 4px 4px; border-bottom-left-radius: 22px; }
-.corner-br { bottom: -2px; right: -2px; border-width: 0 4px 4px 0; border-bottom-right-radius: 22px; }
+.corner-tl { top: -2px; left: -2px; border-width: 3px 0 0 3px; border-top-left-radius: 22px; }
+.corner-tr { top: -2px; right: -2px; border-width: 3px 3px 0 0; border-top-right-radius: 22px; }
+.corner-bl { bottom: -2px; left: -2px; border-width: 0 0 3px 3px; border-bottom-left-radius: 22px; }
+.corner-br { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; border-bottom-right-radius: 22px; }
 
 /* Dashboard Action Buttons Stack */
 .dashboard-actions-stack {

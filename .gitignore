@@ -14,6 +14,18 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Android builds & APK binaries
+*.apk
+*.aab
+public/*.apk
+dist/*.apk
+android/app/build/
+android/.gradle/
+android/captures/
+android/local.properties
+.gradle/
+build/
+
 # Editor & OS files
 .DS_Store
 .vscode/

@@ -72,6 +72,12 @@ export function renderWidgetGuideModal(container, { onClose }) {
               <button id="btn-test-shortcut-wallpaper" class="btn-secondary-outlined" style="font-size: 11.5px; padding: 7px 8px;">
                 📱 Wallpaper
               </button>
+              <button id="btn-test-shortcut-wallet" class="btn-secondary-outlined" style="font-size: 11.5px; padding: 7px 8px;">
+                💳 Wallet Pass
+              </button>
+              <button id="btn-test-shortcut-burner" class="btn-secondary-outlined" style="font-size: 11.5px; padding: 7px 8px;">
+                🔥 Burner QR
+              </button>
             </div>
           </div>
 
@@ -105,6 +111,16 @@ export function renderWidgetGuideModal(container, { onClose }) {
   document.getElementById('btn-test-shortcut-wallpaper')?.addEventListener('click', () => {
     closeModal();
     window.connectApp?.openWallpaperModal?.();
+  });
+
+  document.getElementById('btn-test-shortcut-wallet')?.addEventListener('click', () => {
+    closeModal();
+    window.connectApp?.openWalletPassModal?.();
+  });
+
+  document.getElementById('btn-test-shortcut-burner')?.addEventListener('click', () => {
+    closeModal();
+    window.connectApp?.openBurnerModal?.();
   });
 
   document.getElementById('btn-install-pwa')?.addEventListener('click', () => {

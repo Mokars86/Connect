@@ -20,8 +20,8 @@ export function renderDashboard(container, {
   isPro = false,
   showToast 
 }) {
-  const nameUpper = (activeProfile.name || 'JANE DOE').toUpperCase();
-  const phoneText = activeProfile.phone || '+1 555-0101';
+  const nameUpper = (activeProfile.name || 'MY CONTACT CARD').toUpperCase();
+  const phoneText = activeProfile.phone || 'No phone set';
   const profileType = activeProfile.type || 'Personal';
   const autoScheduleOn = isAutoScheduleEnabled();
 

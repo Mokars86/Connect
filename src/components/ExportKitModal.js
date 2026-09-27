@@ -1,12 +1,13 @@
-import { renderQRCode } from '../utils/qrEngine.js';
+import { renderQRCode, drawQRCodeToCanvas } from '../utils/qrEngine.js';
+import { downloadOrShareImage } from '../utils/fileDownloader.js';
 
 export function renderExportKitModal(container, { activeProfile, onClose, showToast }) {
   let activeTab = 'sig'; // 'sig' or 'zoom'
-  const name = activeProfile.name || 'Jane Doe';
-  const title = activeProfile.title || 'Product Manager';
-  const company = activeProfile.company || 'Google';
-  const phone = activeProfile.phone || '+1 555-0101';
-  const email = activeProfile.email || 'jane.doe@gmail.com';
+  const name = activeProfile.name || 'My Contact Card';
+  const title = activeProfile.title || '';
+  const company = activeProfile.company || '';
+  const phone = activeProfile.phone || '';
+  const email = activeProfile.email || '';
 
   const renderContent = () => {
     container.innerHTML = `
@@ -37,9 +38,9 @@ export function renderExportKitModal(container, { activeProfile, onClose, showTo
             <div class="email-sig-preview-card" id="email-sig-card">
               <div style="flex: 1;">
                 <div style="font-family: var(--font-heading); font-weight: 800; font-size: 16px; color: #0F2537;">${name}</div>
-                <div style="font-size: 13px; color: #0077B6; font-weight: 600;">${title} ${company ? `• ${company}` : ''}</div>
-                <div style="font-size: 12px; color: #4A607A; margin-top: 4px;">📱 ${phone}</div>
-                <div style="font-size: 12px; color: #4A607A;">✉️ ${email}</div>
+                ${title || company ? `<div style="font-size: 13px; color: #0077B6; font-weight: 600;">${title} ${company ? (title ? `• ${company}` : company) : ''}</div>` : ''}
+                ${phone ? `<div style="font-size: 12px; color: #4A607A; margin-top: 4px;">📱 ${phone}</div>` : ''}
+                ${email ? `<div style="font-size: 12px; color: #4A607A;">✉️ ${email}</div>` : ''}
               </div>
 
               <div class="email-sig-qr-box" id="email-sig-qr-target"></div>
@@ -62,7 +63,7 @@ export function renderExportKitModal(container, { activeProfile, onClose, showTo
             <div class="zoom-preview-frame">
               <div style="color: #FFFFFF;">
                 <div style="font-family: var(--font-heading); font-size: 22px; font-weight: 800;">${name}</div>
-                <div style="font-size: 14px; opacity: 0.9; color: #00C9A7; font-weight: 700;">${title} • ${company}</div>
+                ${title || company ? `<div style="font-size: 14px; opacity: 0.9; color: #00C9A7; font-weight: 700;">${title} ${company ? (title ? `• ${company}` : company) : ''}</div>` : ''}
                 <div style="font-size: 12px; opacity: 0.8; margin-top: 4px;">Connect App QR Sharing</div>
               </div>
 
@@ -120,7 +121,7 @@ export function renderExportKitModal(container, { activeProfile, onClose, showTo
     });
 
     // Download Signature PNG
-    document.getElementById('btn-download-sig-png')?.addEventListener('click', () => {
+    document.getElementById('btn-download-sig-png')?.addEventListener('click', async () => {
       try {
         const canvas = document.createElement('canvas');
         canvas.width = 600;
@@ -142,11 +143,19 @@ export function renderExportKitModal(container, { activeProfile, onClose, showTo
         ctx.font = '16px Inter, sans-serif';
         ctx.fillText(`📱 ${phone}   ✉️ ${email}`, 30, 135);
 
-        // Convert canvas to PNG
-        const link = document.createElement('a');
-        link.download = `email_signature_${name.replace(/\s+/g, '_').toLowerCase()}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
+        // Draw QR code in Email Signature
+        const sigQRSize = 140;
+        const sigQRX = 430;
+        const sigQRY = 30;
+        ctx.fillStyle = '#FFFFFF';
+        if (ctx.roundRect) ctx.roundRect(sigQRX - 10, sigQRY - 10, sigQRSize + 20, sigQRSize + 20, 14);
+        else ctx.rect(sigQRX - 10, sigQRY - 10, sigQRSize + 20, sigQRSize + 20);
+        ctx.fill();
+        drawQRCodeToCanvas(ctx, activeProfile, sigQRX, sigQRY, sigQRSize, { showLogo: true });
+
+        // Universal Download / Share PNG
+        const filename = `email_signature_${name.replace(/\s+/g, '_').toLowerCase()}.png`;
+        await downloadOrShareImage(canvas, filename, `${name} - Email Signature`);
         showToast('Downloaded Email Signature PNG!');
       } catch (e) {
         showToast('Generated signature PNG!');
@@ -154,7 +163,7 @@ export function renderExportKitModal(container, { activeProfile, onClose, showTo
     });
 
     // Download Zoom Background PNG
-    document.getElementById('btn-download-zoom-png')?.addEventListener('click', () => {
+    document.getElementById('btn-download-zoom-png')?.addEventListener('click', async () => {
       try {
         const canvas = document.createElement('canvas');
         canvas.width = 1920;
@@ -174,27 +183,32 @@ export function renderExportKitModal(container, { activeProfile, onClose, showTo
         ctx.font = 'bold 64px Outfit, sans-serif';
         ctx.fillText(name, 100, 140);
 
-        ctx.fillStyle = '#00C9A7';
-        ctx.font = 'bold 36px Outfit, sans-serif';
-        ctx.fillText(`${title} • ${company}`, 100, 200);
+        if (title || company) {
+          ctx.fillStyle = '#00C9A7';
+          ctx.font = 'bold 36px Outfit, sans-serif';
+          ctx.fillText(`${title} ${company ? (title ? `• ${company}` : company) : ''}`, 100, 200);
+        }
 
         // White QR Box at Bottom Right
         const cardX = 1450;
-        const cardY = 650;
-        const cardSize = 360;
+        const cardY = 600;
+        const cardSize = 380;
         ctx.fillStyle = '#FFFFFF';
-        ctx.roundRect(cardX, cardY, cardSize, cardSize, 30);
+        if (ctx.roundRect) ctx.roundRect(cardX, cardY, cardSize, cardSize, 30);
+        else ctx.rect(cardX, cardY, cardSize, cardSize);
         ctx.fill();
+
+        // Draw QR code directly on Zoom canvas
+        const zoomQRPad = 25;
+        drawQRCodeToCanvas(ctx, activeProfile, cardX + zoomQRPad, cardY + zoomQRPad, cardSize - zoomQRPad * 2, { showLogo: true });
 
         ctx.fillStyle = '#FFFFFF';
         ctx.font = 'bold 24px Outfit, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('SCAN TO CONNECT', cardX + 180, cardY + cardSize + 40);
+        ctx.fillText('SCAN TO CONNECT', cardX + cardSize / 2, cardY + cardSize + 40);
 
-        const link = document.createElement('a');
-        link.download = `zoom_background_${name.replace(/\s+/g, '_').toLowerCase()}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
+        const filename = `zoom_background_${name.replace(/\s+/g, '_').toLowerCase()}.png`;
+        await downloadOrShareImage(canvas, filename, `${name} - Virtual Background`);
         showToast('Downloaded 1920x1080 Zoom Virtual Background!');
       } catch (e) {
         showToast('Generated Zoom Virtual Background!');

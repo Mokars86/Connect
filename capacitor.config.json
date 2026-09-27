@@ -1,0 +1,11 @@
+{
+  "appId": "com.mokars.connect",
+  "appName": "Connect",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "android": {
+    "allowMixedContent": true,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": true
+  }
+}

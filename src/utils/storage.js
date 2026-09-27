@@ -1,6 +1,32 @@
+import { isAutoCloudSyncEnabled, syncAllToSupabase } from './supabaseClient.js';
+
 /**
  * Local Storage State Manager for Connect Application
  */
+
+let syncDebounceTimer = null;
+export function triggerBackgroundSync() {
+  try {
+    if (typeof isAutoCloudSyncEnabled === 'function' && !isAutoCloudSyncEnabled()) return;
+    if (syncDebounceTimer) clearTimeout(syncDebounceTimer);
+    syncDebounceTimer = setTimeout(async () => {
+      try {
+        await syncAllToSupabase({
+          profiles: loadProfiles(),
+          contacts: loadSavedContacts(),
+          utilityQRs: loadUtilityQRs(),
+          burnerProfiles: loadBurnerProfiles(),
+          analytics: getAnalytics(),
+          subscription: getSubscriptionState()
+        });
+      } catch (e) {
+        // silent sync catch
+      }
+    }, 1500);
+  } catch (e) {
+    // ignore
+  }
+}
 
 const STORAGE_KEYS = {
   PROFILES: 'connect_profiles_v1',
@@ -20,27 +46,27 @@ const DEFAULT_PROFILES = [
   {
     id: 'personal',
     type: 'Personal',
-    name: 'Jane Doe',
-    phone: '+1 555-0101',
-    email: 'jane.doe@gmail.com',
-    title: 'Product Manager',
-    company: 'Google',
-    linkedin: 'linkedin.com/in/janedoe',
-    website: 'https://janedoe.me',
+    name: '',
+    phone: '',
+    email: '',
+    title: '',
+    company: '',
+    linkedin: '',
+    website: '',
     color: '#00C9A7',
-    avatar: '', // Custom center logo/avatar data URL
+    avatar: '', // Custom center logo/avatar data URL or Supabase storage URL
     qrMode: 'vcard' // 'vcard', 'whatsapp', 'sms'
   },
   {
     id: 'business',
     type: 'Business',
-    name: 'Jane Doe',
-    phone: '+1 555-0199',
-    email: 'jane.doe@company.com',
-    title: 'Senior Solutions Lead',
-    company: 'Connect Inc.',
-    linkedin: 'linkedin.com/in/janedoe-pro',
-    website: 'https://connectapp.io',
+    name: '',
+    phone: '',
+    email: '',
+    title: '',
+    company: '',
+    linkedin: '',
+    website: '',
     color: '#0077B6',
     avatar: '',
     qrMode: 'vcard'
@@ -54,7 +80,20 @@ export function loadProfiles() {
       saveProfiles(DEFAULT_PROFILES);
       return DEFAULT_PROFILES;
     }
-    return JSON.parse(data);
+    const profiles = JSON.parse(data);
+    // Sanitize any legacy hardcoded placeholder data
+    const cleaned = profiles.map(p => {
+      const copy = { ...p };
+      if (copy.name === 'Jane Doe') copy.name = '';
+      if (copy.phone && copy.phone.startsWith('+1 555-')) copy.phone = '';
+      if (copy.email && (copy.email === 'jane.doe@gmail.com' || copy.email === 'jane.doe@company.com')) copy.email = '';
+      if (copy.company === 'Google' || copy.company === 'Connect Inc.') copy.company = '';
+      if (copy.title === 'Product Manager' || copy.title === 'Senior Solutions Lead') copy.title = '';
+      if (copy.linkedin && copy.linkedin.includes('janedoe')) copy.linkedin = '';
+      if (copy.website && (copy.website.includes('janedoe.me') || copy.website.includes('connectapp.io'))) copy.website = '';
+      return copy;
+    });
+    return cleaned;
   } catch (e) {
     return DEFAULT_PROFILES;
   }
@@ -63,6 +102,7 @@ export function loadProfiles() {
 export function saveProfiles(profiles) {
   try {
     localStorage.setItem(STORAGE_KEYS.PROFILES, JSON.stringify(profiles));
+    triggerBackgroundSync();
   } catch (e) {
     console.error('Failed to save profiles:', e);
   }
@@ -136,19 +176,21 @@ export function saveBurnerProfile(burner) {
     id: `burner_${Date.now()}`,
     type: 'Burner',
     name: burner.name || 'Temporary Contact',
-    phone: burner.phone || '+1 555-9999',
-    purpose: burner.purpose || 'Marketplace / Rideshare',
+    phone: burner.phone || '',
+    purpose: burner.purpose || 'Marketplace / Temporary',
     expiresAt: burner.expiresAt || (Date.now() + 24 * 60 * 60 * 1000), // Default 24 hours
     color: '#E63946'
   };
   burners.unshift(newBurner);
   localStorage.setItem(STORAGE_KEYS.BURNER_PROFILES, JSON.stringify(burners));
+  triggerBackgroundSync();
   return newBurner;
 }
 
 export function deleteBurnerProfile(id) {
   const burners = loadBurnerProfiles().filter(b => b.id !== id);
   localStorage.setItem(STORAGE_KEYS.BURNER_PROFILES, JSON.stringify(burners));
+  triggerBackgroundSync();
 }
 
 // Basic App State
@@ -212,12 +254,14 @@ export function saveContactToVault(contact) {
 
   localStorage.setItem(STORAGE_KEYS.SAVED_CONTACTS, JSON.stringify(contacts));
   logAnalyticsEvent('contact_saved', 'vault');
+  triggerBackgroundSync();
   return newContact;
 }
 
 export function deleteContactFromVault(contactId) {
   const contacts = loadSavedContacts().filter(c => c.id !== contactId);
   localStorage.setItem(STORAGE_KEYS.SAVED_CONTACTS, JSON.stringify(contacts));
+  triggerBackgroundSync();
 }
 
 export function loadUtilityQRs() {
@@ -243,12 +287,14 @@ export function saveUtilityQR(utilityItem) {
   items.unshift(newItem);
   localStorage.setItem(STORAGE_KEYS.UTILITY_QRS, JSON.stringify(items));
   logAnalyticsEvent('utility_qr_created', utilityItem.type);
+  triggerBackgroundSync();
   return newItem;
 }
 
 export function deleteUtilityQR(id) {
   const items = loadUtilityQRs().filter(i => i.id !== id);
   localStorage.setItem(STORAGE_KEYS.UTILITY_QRS, JSON.stringify(items));
+  triggerBackgroundSync();
 }
 
 export function getAnalytics() {
@@ -256,7 +302,7 @@ export function getAnalytics() {
     const data = localStorage.getItem(STORAGE_KEYS.ANALYTICS);
     if (!data) {
       const defaultAnalytics = {
-        totalShares: 1,
+        totalShares: 0,
         whatsappClicks: 0,
         telegramClicks: 0,
         wallpaperViews: 0,
@@ -269,7 +315,7 @@ export function getAnalytics() {
     }
     return JSON.parse(data);
   } catch (e) {
-    return { totalShares: 1, whatsappClicks: 0, telegramClicks: 0, wallpaperViews: 0, contactsSaved: 0 };
+    return { totalShares: 0, whatsappClicks: 0, telegramClicks: 0, wallpaperViews: 0, contactsSaved: 0 };
   }
 }
 
@@ -330,11 +376,13 @@ export function saveSubscriptionState(details) {
   };
   localStorage.setItem(STORAGE_KEYS.PRO_SUBSCRIPTION, JSON.stringify(subData));
   logAnalyticsEvent('pro_upgraded', subData.planType);
+  triggerBackgroundSync();
   return subData;
 }
 
 export function cancelSubscription() {
   localStorage.removeItem(STORAGE_KEYS.PRO_SUBSCRIPTION);
+  triggerBackgroundSync();
 }
 
 export function redeemPromoCode(inputCode) {

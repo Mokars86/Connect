@@ -3,15 +3,15 @@ import { getAnalytics } from '../utils/storage.js';
 export function renderAnalyticsModal(container, { onClose }) {
   const stats = getAnalytics();
 
-  const totalShares = stats.totalShares || 1;
+  const totalShares = stats.totalShares || 0;
   const waCount = stats.whatsappClicks || 0;
   const tgCount = stats.telegramClicks || 0;
   const savedCount = stats.contactsSaved || 0;
   const wallCount = stats.wallpaperViews || 0;
 
-  const totalActions = Math.max(1, waCount + tgCount + savedCount + wallCount);
-  const waPct = Math.round((waCount / totalActions) * 100);
-  const tgPct = Math.round((tgCount / totalActions) * 100);
+  const totalActions = waCount + tgCount + savedCount + wallCount;
+  const waPct = totalActions > 0 ? Math.round((waCount / totalActions) * 100) : 0;
+  const tgPct = totalActions > 0 ? Math.round((tgCount / totalActions) * 100) : 0;
 
   container.innerHTML = `
     <div class="modal-overlay active" id="analytics-modal-overlay">

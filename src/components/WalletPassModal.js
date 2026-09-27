@@ -3,11 +3,11 @@ import { getLogoSVG } from './Logo.js';
 import { downloadVCardFile } from '../utils/vcard.js';
 
 export function renderWalletPassModal(container, { activeProfile, showToast }) {
-  const nameUpper = (activeProfile.name || 'JANE DOE').toUpperCase();
-  const phoneText = activeProfile.phone || '+1 555-0101';
-  const emailText = activeProfile.email || 'jane@example.com';
-  const titleText = activeProfile.title || 'Executive';
-  const companyText = activeProfile.company || 'Connect Inc.';
+  const nameUpper = (activeProfile.name || 'MY CONTACT PASS').toUpperCase();
+  const phoneText = activeProfile.phone || '';
+  const emailText = activeProfile.email || '';
+  const titleText = activeProfile.title || '';
+  const companyText = activeProfile.company || '';
   const profileType = (activeProfile.type || 'Personal').toUpperCase();
   const profileColor = activeProfile.color || '#00C9A7';
 
@@ -40,13 +40,16 @@ export function renderWalletPassModal(container, { activeProfile, showToast }) {
 
           <div class="wallet-pass-body">
             <div class="wallet-pass-name">${nameUpper}</div>
-            <div class="wallet-pass-sub">
-              <span>${titleText}</span>
-              ${companyText ? `<span>•</span><span>${companyText}</span>` : ''}
-            </div>
+            ${titleText || companyText ? `
+              <div class="wallet-pass-sub">
+                ${titleText ? `<span>${titleText}</span>` : ''}
+                ${titleText && companyText ? `<span>•</span>` : ''}
+                ${companyText ? `<span>${companyText}</span>` : ''}
+              </div>
+            ` : ''}
 
             <div class="wallet-pass-contact-row">
-              <div>📞 ${phoneText}</div>
+              ${phoneText ? `<div>📞 ${phoneText}</div>` : ''}
               ${emailText ? `<div>✉️ ${emailText}</div>` : ''}
             </div>
           </div>

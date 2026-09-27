@@ -16,7 +16,9 @@ export function renderDrawer(container, {
   onOpenDonation,
   onOpenInstall,
   onOpenSubscription,
+  onOpenCloudSync,
   onOpenSplash, 
+  onOpenPrivacy,
   onToggleAutoSchedule, 
   isAutoScheduleOn, 
   onExportVCard, 
@@ -25,7 +27,7 @@ export function renderDrawer(container, {
   currentTheme,
   isPro = false
 }) {
-  const profileName = activeProfile.name || 'JANE DOE';
+  const profileName = activeProfile.name || 'My Card';
   const profileType = activeProfile.type || 'Personal';
   const firstLetter = profileName.charAt(0).toUpperCase();
 
@@ -202,6 +204,18 @@ export function renderDrawer(container, {
             <svg class="drawer-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
           </li>
 
+          <li class="drawer-menu-item" id="menu-cloudsync">
+            <div class="drawer-item-left">
+              <div class="drawer-icon-box" style="background: rgba(62, 207, 142, 0.15); color: #3ECF8E;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+                </svg>
+              </div>
+              <span class="drawer-item-label">Supabase Cloud Sync</span>
+            </div>
+            <span class="drawer-pill-badge" style="background: #3ECF8E; color: #0F172A; font-weight: 800;">CLOUD</span>
+          </li>
+
           <!-- SECTION 3: UTILITIES & TOOLS -->
           <div class="drawer-section-label">Tools & Utilities</div>
 
@@ -344,6 +358,19 @@ export function renderDrawer(container, {
             <span class="drawer-pill-badge badge-orange">SUPPORT</span>
           </li>
 
+          <li class="drawer-menu-item" id="menu-privacy">
+            <div class="drawer-item-left">
+              <div class="drawer-icon-box box-teal">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <rect x="9" y="11" width="6" height="5" rx="1" fill="currentColor"/>
+                </svg>
+              </div>
+              <span class="drawer-item-label">Privacy Policy</span>
+            </div>
+            <svg class="drawer-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </li>
+
           <li class="drawer-menu-item item-danger" id="menu-reset">
             <div class="drawer-item-left">
               <div class="drawer-icon-box box-red">
@@ -423,6 +450,11 @@ export function renderDrawer(container, {
     if (onOpenWalletPass) onOpenWalletPass();
   });
 
+  document.getElementById('menu-cloudsync')?.addEventListener('click', () => {
+    closeDrawer();
+    if (onOpenCloudSync) onOpenCloudSync();
+  });
+
   document.getElementById('menu-donation')?.addEventListener('click', () => {
     closeDrawer();
     if (onOpenDonation) onOpenDonation();
@@ -479,6 +511,11 @@ export function renderDrawer(container, {
 
   document.getElementById('menu-theme')?.addEventListener('click', () => {
     onToggleTheme();
+  });
+
+  document.getElementById('menu-privacy')?.addEventListener('click', () => {
+    closeDrawer();
+    if (onOpenPrivacy) onOpenPrivacy();
   });
 
   document.getElementById('menu-reset')?.addEventListener('click', () => {

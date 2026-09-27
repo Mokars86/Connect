@@ -1,8 +1,10 @@
-import { isProSubscribed, getSubscriptionState, saveSubscriptionState, redeemPromoCode, cancelSubscription } from '../utils/storage.js';
+import { isProSubscribed, getSubscriptionState, saveSubscriptionState, redeemPromoCode, cancelSubscription, getActiveProfile } from '../utils/storage.js';
+import { startPaystackCheckout } from '../utils/paystack.js';
 
 export function renderSubscriptionModal(container, { featureName = '', showToast, onClose, onSuccess }) {
   const isSubscribed = isProSubscribed();
   const subState = getSubscriptionState();
+  const activeProfile = getActiveProfile();
 
   let selectedPlan = 'annual'; // Default selected: Annual (Best Value)
 
@@ -36,6 +38,7 @@ export function renderSubscriptionModal(container, { featureName = '', showToast
   ];
 
   const features = [
+    'Add up to 4 Social Media Handles with Popping Direct Icons',
     'Unlimited Contact Profiles & Smart Auto-Schedule',
     'Customize Profile Card & Advanced QR Code Design',
     'Apple & Google Wallet Pass Cards',
@@ -114,6 +117,12 @@ export function renderSubscriptionModal(container, { featureName = '', showToast
               `).join('')}
             </div>
 
+            <!-- Email Input for Receipt & Activation -->
+            <div class="floating-label-group" style="margin-top: 8px; margin-bottom: 4px;">
+              <input type="email" id="sub-email" value="${activeProfile?.email || ''}" placeholder=" " required />
+              <label for="sub-email">Your Email Address (for receipt & Pro access)</label>
+            </div>
+
             <!-- PAYSTACK CHECKOUT CTA BUTTON -->
             <button id="btn-paystack-subscribe" class="btn-paystack-sub">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -129,7 +138,7 @@ export function renderSubscriptionModal(container, { featureName = '', showToast
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
               </svg>
-              Secured by Paystack • Mobile Money & Cards Supported
+              Secured by Paystack • MoMo (MTN, Telecel, AT) & Cards
             </div>
 
             <!-- PROMO CODE SECTION -->
@@ -205,59 +214,30 @@ export function renderSubscriptionModal(container, { featureName = '', showToast
       }
     });
 
-    // Paystack Trigger
+    // Paystack Live Trigger
     document.getElementById('btn-paystack-subscribe')?.addEventListener('click', () => {
       const targetPlan = plans.find(p => p.id === selectedPlan) || plans[1];
-      triggerPaystackSubscription(targetPlan);
-    });
+      const emailInput = document.getElementById('sub-email')?.value.trim();
+      const email = emailInput || activeProfile?.email || 'customer@connectapp.io';
 
-    const triggerPaystackSubscription = (planObj) => {
-      if (showToast) showToast(`Opening Paystack Checkout for ${planObj.name}...`);
-
-      const handleSuccess = (refObj) => {
-        const subData = saveSubscriptionState({
-          planType: planObj.id,
-          planName: planObj.name,
-          ref: refObj.reference || 'PAYSTACK_' + Math.floor(Math.random() * 1000000)
-        });
-        if (showToast) showToast(`🎉 Success! Upgraded to ${planObj.name}.`);
-        if (onSuccess) onSuccess(subData);
-        closeModal();
-      };
-
-      try {
-        if (window.PaystackPop) {
-          const handler = window.PaystackPop.setup({
-            key: 'pk_live_demo_connect_app', // Paystack Public Key
-            email: 'user@connectapp.io',
-            amount: planObj.amountGHS * 100,
-            currency: 'GHS',
-            ref: 'CONNECT_SUB_' + Math.floor((Math.random() * 1000000000) + 1),
-            plan: planObj.id === 'lifetime' ? '' : planObj.planCode,
-            callback: function(response) {
-              handleSuccess(response);
-            },
-            onClose: function() {
-              if (showToast) showToast('Paystack checkout window closed.');
-            }
+      startPaystackCheckout({
+        email,
+        amountGHS: targetPlan.amountGHS,
+        planName: targetPlan.name,
+        showToast,
+        onSuccess: (paymentRes) => {
+          const subData = saveSubscriptionState({
+            planType: targetPlan.id,
+            planName: targetPlan.name,
+            ref: paymentRes.reference,
+            email: paymentRes.email
           });
-          handler.openIframe();
-        } else {
-          // Load Paystack Inline script dynamically if not present
-          const script = document.createElement('script');
-          script.src = 'https://js.paystack.co/v1/inline.js';
-          script.onload = () => triggerPaystackSubscription(planObj);
-          script.onerror = () => {
-            // Fallback for offline or blocked script environment: instant simulation unlock
-            handleSuccess({ reference: 'DEMO_UNLOCK_' + Date.now() });
-          };
-          document.body.appendChild(script);
+          if (showToast) showToast(`🎉 Payment Confirmed! Upgraded to ${targetPlan.name}.`);
+          if (onSuccess) onSuccess(subData);
+          closeModal();
         }
-      } catch (err) {
-        // Fallback simulation unlock for testing
-        handleSuccess({ reference: 'DEMO_UNLOCK_' + Date.now() });
-      }
-    };
+      });
+    });
   };
 
   renderContent();

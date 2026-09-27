@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy - Connect App | Mokars Tech</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #00C9A7;
+      --primary-dark: #008f76;
+      --secondary: #0077B6;
+      --bg-dark: #0B192C;
+      --surface: #112239;
+      --card-bg: #FFFFFF;
+      --text-main: #0F2537;
+      --text-muted: #5A6E82;
+      --border: #E2E8F0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #F8FAFC;
+      color: var(--text-main);
+      line-height: 1.65;
+      padding: 30px 16px;
+    }
+
+    .container {
+      max-width: 840px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border-radius: 24px;
+      padding: 44px 36px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+      border: 1px solid var(--border);
+    }
+
+    .header-branding {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #F1F5F9;
+    }
+
+    .app-icon {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, #00C9A7, #0077B6);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-family: 'Outfit', sans-serif;
+      font-size: 26px;
+      font-weight: 900;
+      box-shadow: 0 6px 18px rgba(0, 201, 167, 0.3);
+    }
+
+    .title-group h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #0F172A;
+      letter-spacing: -0.5px;
+    }
+
+    .title-group p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .badge-pill {
+      display: inline-block;
+      background: rgba(0, 201, 167, 0.12);
+      color: var(--primary-dark);
+      font-size: 12px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-top: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #0F2537;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #1E293B;
+      margin-top: 18px;
+      margin-bottom: 8px;
+    }
+
+    p, li {
+      font-size: 15px;
+      color: #334155;
+      margin-bottom: 14px;
+    }
+
+    ul {
+      margin-left: 24px;
+      margin-bottom: 16px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .highlight-card {
+      background: linear-gradient(135deg, #EBF7F5, #F4FBF9);
+      border: 1.5px solid rgba(0, 201, 167, 0.35);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin: 22px 0;
+    }
+
+    .highlight-card h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
+    }
+
+    .highlight-card p {
+      margin: 0;
+      font-size: 14px;
+      color: #0F2537;
+    }
+
+    .permission-box {
+      border: 1px solid var(--border);
+      background: #F8FAFC;
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+
+    .permission-title {
+      font-weight: 700;
+      color: #0F172A;
+      font-size: 15px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .permission-desc {
+      font-size: 14px;
+      color: #475569;
+      margin: 0;
+    }
+
+    .footer-note {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid #E2E8F0;
+      font-size: 13.5px;
+      color: #64748B;
+      text-align: center;
+    }
+
+    .contact-box {
+      background: #F1F5F9;
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-top: 16px;
+    }
+
+    .contact-box a {
+      color: var(--secondary);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .contact-box a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 26px 20px;
+        border-radius: 18px;
+      }
+      .title-group h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header-branding">
+      <div class="app-icon">C</div>
+      <div class="title-group">
+        <h1>Connect Privacy Policy</h1>
+        <p>Digital Identity & Smart Contact Pass • Mokars Tech</p>
+        <span class="badge-pill">Effective Date: September 27, 2026</span>
+      </div>
+    </div>
+
+    <div class="highlight-card">
+      <h4>🔒 100% Privacy & Local-First Commitment</h4>
+      <p>Connect is designed with a strict privacy-first architecture. Your contact cards, social media links, and scanned connections are processed and stored locally on your device. We do not sell, rent, or monetize your personal information.</p>
+    </div>
+
+    <h2>1. Overview</h2>
+    <p>This Privacy Policy explains how <strong>Connect</strong> ("the App", "we", "us", or "our"), developed by <strong>Mokars Tech</strong>, collects, uses, stores, and protects your information when you use our mobile application and related services.</p>
+    <p>By downloading, installing, or using Connect, you agree to the practices described in this Privacy Policy.</p>
+
+    <h2>2. Information You Provide & We Process</h2>
+    <p>Connect allows you to create customizable digital business cards, contact passes, and QR codes. We may process the following categories of information that you explicitly enter:</p>
+    <ul>
+      <li><strong>Identity & Contact Details:</strong> Full Name, Phone Number, Job Title, Company / Organization Name, and Email Address.</li>
+      <li><strong>Social Media Profiles & Handles:</strong> Usernames and links to platforms you add (Instagram, WhatsApp, Telegram, TikTok, LinkedIn, 𝕏 / Twitter, Facebook, YouTube, GitHub, Snapchat).</li>
+      <li><strong>Custom Brand Logos & Avatars:</strong> Profile photos or company logos you choose to embed in your card.</li>
+      <li><strong>Payment Details (Optional):</strong> Mobile Money (MoMo) account numbers you provide for direct peer-to-peer payment QR codes.</li>
+      <li><strong>Saved Connections:</strong> Contact cards and QR codes of other users you scan and choose to save into your "Connections Vault".</li>
+      <li><strong>Utility Data:</strong> Wi-Fi network credentials or custom URLs you convert into utility QR codes.</li>
+    </ul>
+
+    <h2>3. How Your Information Is Stored</h2>
+    <p><strong>Offline Local Storage:</strong> By default, all profiles, QR code configurations, saved connections, and interaction analytics are stored strictly in your device's local encrypted storage sandbox (HTML5 LocalStorage / IndexedDB). No contact data is transmitted to external servers during regular offline operation.</p>
+    <p><strong>Optional Cloud Sync (Supabase):</strong> If you explicitly enable Cloud Sync, your encrypted profiles and contacts are safely backed up to your designated cloud database to allow multi-device restore. You can disable this feature at any time.</p>
+
+    <h2>4. Device Permissions We Request & Why</h2>
+    <p>To provide core application functionality, Connect requests the following system permissions on your Android device:</p>
+
+    <div class="permission-box">
+      <div class="permission-title">📷 Camera (android.permission.CAMERA)</div>
+      <p class="permission-desc"><strong>Purpose:</strong> Used exclusively in real-time when you open the in-app QR scanner to scan another user's contact QR code. The camera stream is decoded instantly in local memory and is <em>never</em> recorded, stored, or streamed to any remote server.</p>
+    </div>
+
+    <div class="permission-box">
+      <div class="permission-title">📁 Storage & Media Access (android.permission.READ_EXTERNAL_STORAGE / Photos)</div>
+      <p class="permission-desc"><strong>Purpose:</strong> Used only when you choose to: (1) upload a photo or logo from your gallery for your contact pass, (2) select an existing QR image from your gallery to scan, or (3) save exported lock screen wallpapers and .vcf contact files to your device.</p>
+    </div>
+
+    <div class="permission-box">
+      <div class="permission-title">🌐 Internet & Network (android.permission.INTERNET)</div>
+      <p class="permission-desc"><strong>Purpose:</strong> Used to launch external deep-links (such as opening WhatsApp, Instagram, or email when you tap a contact button) and to support optional cloud backup if enabled.</p>
+    </div>
+
+    <h2>5. Third-Party Services</h2>
+    <p>When you scan or share a contact card containing external social media links (e.g., wa.me for WhatsApp, t.me for Telegram, instagram.com), clicking those buttons will open the corresponding third-party application or website. Those external services operate under their own independent privacy policies.</p>
+
+    <h2>6. User Control, Data Retention & Deletion Rights</h2>
+    <p>You have full ownership and control over your data at all times:</p>
+    <ul>
+      <li><strong>Edit / Modify:</strong> You can edit or replace any profile information, social media handle, or contact at any time in the "Customize Card" editor.</li>
+      <li><strong>Individual Deletion:</strong> You can remove saved contacts from your vault or delete custom profiles whenever you wish.</li>
+      <li><strong>Complete Data Erasure:</strong> You can instantly wipe all stored application data, profiles, and cached connections by tapping <em>"Reset App Data"</em> in the app's settings menu or by clearing the app data via Android Settings.</li>
+    </ul>
+
+    <h2>7. Children's Privacy</h2>
+    <p>Connect is not directed at children under the age of 13. We do not knowingly collect or solicit personal information from children. If you believe that a child has provided us with personal information, please contact us so we can take appropriate action.</p>
+
+    <h2>8. Security of Your Information</h2>
+    <p>We implement strict industry-standard security measures to safeguard your information. Because Connect is architected around on-device processing and client-side QR generation, your contact card data is not susceptible to remote central server database breaches.</p>
+
+    <h2>9. Changes to This Privacy Policy</h2>
+    <p>We may update our Privacy Policy periodically to reflect new features or regulatory requirements. Any updates will be published on this page with an updated "Effective Date" and will be accessible directly within the Connect app.</p>
+
+    <h2>10. Contact Us</h2>
+    <div class="contact-box">
+      <p>If you have any questions, concerns, or requests regarding this Privacy Policy or your data privacy, please reach out to us at:</p>
+      <p><strong>Developer:</strong> Mokars Tech</p>
+      <p><strong>Email Support:</strong> <a href="mailto:support@mokarstech.com">support@mokarstech.com</a></p>
+      <p><strong>Alternative Contact:</strong> <a href="mailto:mokarstech@gmail.com">mokarstech@gmail.com</a></p>
+    </div>
+
+    <div class="footer-note">
+      <p>© 2026 Connect by Mokars Tech. All rights reserved.</p>
+    </div>
+  </div>
+
+</body>
+</html>

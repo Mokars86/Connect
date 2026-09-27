@@ -36,13 +36,13 @@ export function renderBurnerModal(container, { onClose, showToast }) {
           <!-- Create Burner Form -->
           <form id="burner-form" style="display: flex; flex-direction: column; gap: 12px;">
             <div class="floating-label-group">
-              <input type="text" id="burner-name" placeholder=" " value="Marketplace Contact" required />
-              <label for="burner-name">Display Name (e.g. Seller / Buyer)</label>
+              <input type="text" id="burner-name" placeholder=" " value="" required />
+              <label for="burner-name">Display Name (e.g. Temporary Contact)</label>
             </div>
 
             <div class="floating-label-group">
-              <input type="tel" id="burner-phone" placeholder=" " value="+1 555-0999" required />
-              <label for="burner-phone">VoIP / Secondary Burner Phone</label>
+              <input type="tel" id="burner-phone" placeholder=" " value="" required />
+              <label for="burner-phone">Phone Number</label>
             </div>
 
             <div class="floating-label-group">

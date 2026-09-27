@@ -79,25 +79,79 @@
 .btn-whatsapp {
   background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
   box-shadow: 0 6px 18px rgba(37, 211, 102, 0.3);
-  animation-delay: 0.1s;
 }
 
 /* Telegram Button */
 .btn-telegram {
   background: linear-gradient(135deg, #229ED9 0%, #0088CC 100%);
   box-shadow: 0 6px 18px rgba(34, 158, 217, 0.3);
-  animation-delay: 0.2s;
+}
+
+/* Instagram Button */
+.btn-instagram {
+  background: linear-gradient(135deg, #833AB4 0%, #FD1D1D 50%, #FCAF45 100%);
+  box-shadow: 0 6px 18px rgba(225, 48, 108, 0.35);
+}
+
+/* LinkedIn Button */
+.btn-linkedin {
+  background: linear-gradient(135deg, #0077B5 0%, #004182 100%);
+  box-shadow: 0 6px 18px rgba(0, 119, 181, 0.35);
+}
+
+/* X / Twitter Button */
+.btn-twitter, .btn-x {
+  background: linear-gradient(135deg, #181818 0%, #000000 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+/* TikTok Button */
+.btn-tiktok {
+  background: linear-gradient(135deg, #010101 0%, #25F4EE 60%, #FE2C55 100%);
+  box-shadow: 0 6px 18px rgba(254, 44, 85, 0.35);
+}
+
+/* Facebook Button */
+.btn-facebook {
+  background: linear-gradient(135deg, #1877F2 0%, #0C51B7 100%);
+  box-shadow: 0 6px 18px rgba(24, 119, 242, 0.35);
+}
+
+/* YouTube Button */
+.btn-youtube {
+  background: linear-gradient(135deg, #FF0000 0%, #B20000 100%);
+  box-shadow: 0 6px 18px rgba(255, 0, 0, 0.35);
+}
+
+/* GitHub Button */
+.btn-github {
+  background: linear-gradient(135deg, #24292E 0%, #181717 100%);
+  box-shadow: 0 6px 18px rgba(36, 41, 46, 0.35);
+}
+
+/* Snapchat Button */
+.btn-snapchat {
+  background: linear-gradient(135deg, #FFFC00 0%, #F3DA0B 100%);
+  color: #000000 !important;
+  box-shadow: 0 6px 18px rgba(255, 252, 0, 0.35);
 }
 
 /* Call & SMS Buttons */
 .btn-call {
   background: linear-gradient(135deg, #00C9A7 0%, #0096C7 100%);
-  animation-delay: 0.3s;
 }
 
 .btn-sms {
   background: linear-gradient(135deg, #7209B7 0%, #510087 100%);
-  animation-delay: 0.4s;
+}
+
+.btn-email {
+  background: linear-gradient(135deg, #EA4335 0%, #C5221F 100%);
+}
+
+.btn-website {
+  background: linear-gradient(135deg, #0077B6 0%, #03045E 100%);
 }
 
 @keyframes popIconBounce {
@@ -110,22 +164,92 @@
 .scanner-viewport-frame {
   width: 100%;
   max-width: 320px;
-  height: 260px;
+  height: 280px;
   margin: 0 auto;
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 2px solid var(--primary-teal);
   position: relative;
-  background: #000;
+  background: #0B192C;
 }
 
 #reader {
   width: 100% !important;
   height: 100% !important;
+  min-height: 280px !important;
+  display: block !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
 #reader video {
   width: 100% !important;
   height: 100% !important;
   object-fit: cover !important;
+  display: block !important;
 }
+
+#reader #reader__scan_region {
+  min-height: auto !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#reader #reader__dashboard {
+  display: none !important;
+}
+
+/* Status overlay text */
+.scanner-status-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 700;
+  z-index: 10;
+  background: rgba(11, 25, 44, 0.85);
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(0, 229, 191, 0.4);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* Viewfinder Laser Beam Animation */
+.scanner-laser-beam {
+  position: absolute;
+  top: 15%;
+  left: 10%;
+  width: 80%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00E5BF, #00C9A7, transparent);
+  box-shadow: 0 0 10px #00E5BF, 0 0 20px #00E5BF;
+  z-index: 6;
+  pointer-events: none;
+  animation: laserScan 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes laserScan {
+  0% { top: 15%; opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { top: 85%; opacity: 0.3; }
+}
+
+/* Viewfinder Corner Accents */
+.scanner-corner-bracket {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-color: #00E5BF;
+  border-style: solid;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.sc-tl { top: 18px; left: 18px; border-width: 3px 0 0 3px; border-top-left-radius: 4px; }
+.sc-tr { top: 18px; right: 18px; border-width: 3px 3px 0 0; border-top-right-radius: 4px; }
+.sc-bl { bottom: 18px; left: 18px; border-width: 0 0 3px 3px; border-bottom-left-radius: 4px; }
+.sc-br { bottom: 18px; right: 18px; border-width: 0 3px 3px 0; border-bottom-right-radius: 4px; }

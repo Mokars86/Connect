@@ -22,7 +22,7 @@ export function renderProfileSelectorModal(container, { profiles, activeProfileI
                   ${p.type || 'Profile'} Card
                   ${p.id === activeProfileId ? '<span class="sharing-badge">ACTIVE</span>' : ''}
                 </h4>
-                <p>${p.name || 'Jane Doe'} (${p.phone || 'No phone'})</p>
+                <p>${p.name || 'Unnamed Card'} (${p.phone || 'No phone'})</p>
                 ${p.company ? `<p style="font-size: 11px; opacity: 0.7;">${p.company}</p>` : ''}
               </div>
               <div style="width: 20px; height: 20px; border-radius: 50%; background: ${p.color || '#00C9A7'}; border: 2px solid #FFF; box-shadow: 0 0 4px rgba(0,0,0,0.2);"></div>

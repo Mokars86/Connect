@@ -16,11 +16,13 @@ import './styles/bottomnav.css';
 import './styles/walletpass.css';
 import './styles/donation.css';
 import './styles/subscription.css';
+import './styles/cloudsync.css';
 
 import { renderBottomNav } from './components/BottomNav.js';
 import { renderWalletPassModal } from './components/WalletPassModal.js';
 import { renderDonationModal } from './components/DonationModal.js';
 import { renderSubscriptionModal } from './components/SubscriptionModal.js';
+import { renderCloudSyncModal } from './components/CloudSyncModal.js';
 
 import { 
   loadProfiles, 
@@ -55,6 +57,7 @@ import { renderExportKitModal } from './components/ExportKitModal.js';
 import { renderBurnerModal } from './components/BurnerModal.js';
 import { renderPingBackModal } from './components/PingBackModal.js';
 import { renderInstallModal } from './components/InstallModal.js';
+import { renderPrivacyModal } from './components/PrivacyModal.js';
 
 // Global PWA Event Listener & Service Worker Registration
 window.deferredPrompt = null;
@@ -108,6 +111,9 @@ class ConnectApp {
         else if (action === 'wallet') this.openWalletPassModal();
         else if (action === 'burner') this.openBurnerModal();
         else if (action === 'utility') this.openUtilityQRModal();
+        else if (action === 'widgets') this.openWidgetGuide();
+        else if (action === 'analytics') this.openAnalyticsModal();
+        else if (action === 'share') this.navigateTo('dashboard');
       }, 1900);
     }
   }
@@ -167,10 +173,10 @@ class ConnectApp {
             name: data.name || active.name || 'My Contact Card',
             phone: data.phone
           });
-          // Also update business profile default name if it was preset
+          // Also update business profile default name if it was not set
           const profiles = loadProfiles();
           const bus = profiles.find(p => p.id === 'business');
-          if (bus && (bus.name === 'Jane Doe' || !bus.name)) {
+          if (bus && !bus.name) {
             updateProfile({
               ...bus,
               name: data.name || 'My Contact Card'
@@ -221,7 +227,8 @@ class ConnectApp {
           this.showToast('Profile and QR design saved!');
           this.navigateTo('dashboard');
         },
-        onBack: () => this.navigateTo('dashboard')
+        onBack: () => this.navigateTo('dashboard'),
+        onUpgradePro: (feature) => this.openSubscriptionModal(feature)
       });
       this.attachBottomNav();
       return;
@@ -302,7 +309,9 @@ class ConnectApp {
       onOpenDonation: () => this.openDonationModal(),
       onOpenInstall: () => this.openInstallModal(),
       onOpenSubscription: () => this.openSubscriptionModal(),
+      onOpenCloudSync: () => this.openCloudSyncModal(),
       onOpenSplash: () => this.openSplashScreen(2000),
+      onOpenPrivacy: () => this.openPrivacyModal(),
 
       onToggleAutoSchedule: () => {
         if (!isProSubscribed()) {
@@ -368,10 +377,6 @@ class ConnectApp {
   }
 
   openCustomize() {
-    if (!isProSubscribed()) {
-      this.openSubscriptionModal('Customize Profile Card & Advanced QR Design');
-      return;
-    }
     this.navigateTo('editor');
   }
 
@@ -534,6 +539,31 @@ class ConnectApp {
       onSavedToVault: () => this.navigateTo('connections'),
       showToast: (msg) => this.showToast(msg)
     });
+  }
+
+  openCloudSyncModal() {
+    let syncSlot = document.getElementById('cloudsync-modal-slot');
+    if (!syncSlot) {
+      syncSlot = document.createElement('div');
+      syncSlot.id = 'cloudsync-modal-slot';
+      this.appContainer.appendChild(syncSlot);
+    }
+    renderCloudSyncModal(syncSlot, {
+      showToast: (msg) => this.showToast(msg),
+      onDataRestored: () => {
+        this.render();
+      }
+    });
+  }
+
+  openPrivacyModal() {
+    let privacySlot = document.getElementById('privacy-modal-slot');
+    if (!privacySlot) {
+      privacySlot = document.createElement('div');
+      privacySlot.id = 'privacy-modal-slot';
+      this.appContainer.appendChild(privacySlot);
+    }
+    renderPrivacyModal(privacySlot, {});
   }
 
   openDrawer() {

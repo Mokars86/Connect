@@ -1,3 +1,5 @@
+import { startPaystackCheckout } from '../utils/paystack.js';
+
 export function renderDonationModal(container, { activeProfile, showToast, onClose }) {
   let selectedAmount = 30; // Default 30 GHS (~$3 / 1 Coffee)
   let selectedQty = 1;
@@ -46,12 +48,12 @@ export function renderDonationModal(container, { activeProfile, showToast, onClo
             </div>
 
             <div class="floating-label-group">
-              <input type="text" id="donate-name" value="${activeProfile.name || ''}" placeholder=" " />
+              <input type="text" id="donate-name" value="${activeProfile?.name || ''}" placeholder=" " />
               <label for="donate-name">Your Name (Optional)</label>
             </div>
 
             <div class="floating-label-group">
-              <input type="email" id="donate-email" value="${activeProfile.email || ''}" placeholder=" " required />
+              <input type="email" id="donate-email" value="${activeProfile?.email || ''}" placeholder=" " required />
               <label for="donate-email">Your Email Address</label>
             </div>
 
@@ -117,52 +119,17 @@ export function renderDonationModal(container, { activeProfile, showToast, onClo
       const email = document.getElementById('donate-email').value || 'donor@example.com';
       const name = document.getElementById('donate-name').value || 'Generous Supporter';
 
-      // Load Paystack Inline JS if not loaded yet
-      if (!window.PaystackPop) {
-        const script = document.createElement('script');
-        script.src = 'https://js.paystack.co/v1/inline.js';
-        script.onload = () => triggerPaystackPopup(amountGHS, email, name);
-        document.body.appendChild(script);
-      } else {
-        triggerPaystackPopup(amountGHS, email, name);
-      }
-    });
-
-    const triggerPaystackPopup = (amountGHS, email, name) => {
-      showToast(`Launching Paystack Checkout for GHS ${amountGHS}...`);
-
-      try {
-        if (window.PaystackPop) {
-          const handler = window.PaystackPop.setup({
-            key: 'pk_live_demo_connect_app', // Standard Paystack Key placeholder
-            email: email,
-            amount: amountGHS * 100, // Amount in kobo / pesewas
-            currency: 'GHS',
-            ref: 'CONNECT_' + Math.floor((Math.random() * 1000000000) + 1),
-            metadata: {
-              custom_fields: [
-                { display_name: "Donor Name", variable_name: "donor_name", value: name }
-              ]
-            },
-            callback: function(response) {
-              showToast(`🎉 Thank you ${name}! Your donation was received.`);
-              closeModal();
-            },
-            onClose: function() {
-              showToast('Paystack checkout window closed.');
-            }
-          });
-          handler.openIframe();
-        } else {
-          // Demo fallback modal confirmation
-          showToast(`☕ Thank you ${name}! Paystack checkout initialized for GHS ${amountGHS}.`);
+      startPaystackCheckout({
+        email,
+        amountGHS,
+        planName: `Coffee Donation by ${name}`,
+        showToast,
+        onSuccess: (paymentRes) => {
+          if (showToast) showToast(`🎉 Thank you so much, ${name}! Your donation of GHS ${amountGHS} was received.`);
           closeModal();
         }
-      } catch (err) {
-        showToast(`☕ Thank you for supporting Connect App with GHS ${amountGHS}!`);
-        closeModal();
-      }
-    };
+      });
+    });
   };
 
   renderContent();
